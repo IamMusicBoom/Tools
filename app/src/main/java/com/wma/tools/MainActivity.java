@@ -1,13 +1,23 @@
 package com.wma.tools;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import android.os.Bundle;
+import com.wma.tools.databinding.ActivityMainBinding;
+import com.wma.wmalib.WMABaseActivity;
+
+
+
+public class MainActivity extends WMABaseActivity<ActivityMainBinding> {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate(Bundle savedInstanceState, ActivityMainBinding binding) {
+
+    }
+
+
+    @Override
+    public int getContentLayoutId() {
+        return R.layout.activity_main;
     }
 }
