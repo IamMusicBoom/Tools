@@ -31,10 +31,10 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return this.createRootView();
+        return this.createRootView(container);
     }
 
-    private View createRootView() {
+    private View createRootView(ViewGroup container) {
         mRootView = new LinearLayout(mContext);
         mRootView.setOrientation(LinearLayout.VERTICAL);
         mRootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -43,12 +43,12 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
         mRootView.addView(createNavBar());
 
         //内容部分
-        mRootView.addView(createContentView());
+        mRootView.addView(createContentView(container));
         return mRootView;
     }
 
-    private View createContentView() {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),null,false);
+    private View createContentView(ViewGroup container) {
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),container,false);
         return mContentBinding.getRoot();
     }
 
