@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.debug.hv.ViewServer;
 import com.wma.wmalib.common.LogUtils;
@@ -33,6 +34,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
 
     T mContentBinding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +68,9 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         //title 部分
         mRootView.addView(createNavBar());
 
-        //内容部分
+
         mRootView.addView(createContentView());
+
         return mRootView;
     }
 

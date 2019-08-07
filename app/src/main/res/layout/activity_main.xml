@@ -7,6 +7,10 @@
         android:id="@+id/content_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <com.wma.wmalib.widget.WViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.wma.wmalib.widget.WViewPager>
     </android.support.constraint.ConstraintLayout>
 </layout>

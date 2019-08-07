@@ -1,7 +1,8 @@
-package com.wma.tools;
+package com.wma.tools.news;
 
 import android.os.Bundle;
 
+import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentNewsBinding;
 import com.wma.wmalib.base.BaseFragment;
 
