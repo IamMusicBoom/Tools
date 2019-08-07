@@ -1,4 +1,4 @@
-package com.wma.wmalib;
+package com.wma.wmalib.base;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -6,27 +6,30 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.debug.hv.ViewServer;
-import com.wma.wmalib.widget.WMANavigationBar;
+import com.wma.wmalib.common.LogUtils;
+import com.wma.wmalib.widget.NavigationBar;
 
 import app.AppManager;
-import app.WMABaseAppContext;
+import app.BaseAppContext;
 
 /**
  * Created by 王明骜 on 19-8-5 下午4:08.
  */
-public abstract class WMABaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
+public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     AppManager appManager;
 
    public LinearLayout mRootView;
 
-    Context mContext = WMABaseAppContext.getInstance();
+    Context mContext = BaseAppContext.getInstance();
 
-    public WMANavigationBar mNavBar;
+    public NavigationBar mNavBar;
 
 
     T mContentBinding;
@@ -73,7 +76,7 @@ public abstract class WMABaseActivity<T extends ViewDataBinding> extends AppComp
      * @return
      */
     private View createContentView() {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),null,false);
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),mRootView,false);
         return mContentBinding.getRoot();
     }
 
@@ -82,7 +85,7 @@ public abstract class WMABaseActivity<T extends ViewDataBinding> extends AppComp
      * @return
      */
     private View createNavBar() {
-        mNavBar = new WMANavigationBar(mContext);
+        mNavBar = new NavigationBar(mContext);
         return mNavBar.getNavBinding().getRoot();
     }
 

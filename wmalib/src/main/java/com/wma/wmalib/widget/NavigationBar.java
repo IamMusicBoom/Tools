@@ -15,13 +15,13 @@ import com.wma.wmalib.databinding.NavigationBarBinding;
 /**
  * Created by 王明骜 on 19-8-5 下午4:49.
  */
-public class WMANavigationBar {
+public class NavigationBar {
     private Context mContext;
 
 
     NavigationBarBinding binding;
 
-    public WMANavigationBar(Context mContext) {
+    public NavigationBar(Context mContext) {
         this.mContext = mContext;
         initTitleView();
     }

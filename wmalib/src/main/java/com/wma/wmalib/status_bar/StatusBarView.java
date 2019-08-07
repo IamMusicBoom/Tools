@@ -5,12 +5,12 @@ import android.view.View;
 /**
  * Created by 王明骜 on 19-8-6 下午1:50.
  */
-public class WMAStatusBarView extends View {
-    public WMAStatusBarView(Context context, AttributeSet attrs) {
+public class StatusBarView extends View {
+    public StatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WMAStatusBarView(Context context) {
+    public StatusBarView(Context context) {
         super(context);
     }
 }

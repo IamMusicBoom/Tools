@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 /**
  * Created by 王明骜 on 19-8-6 下午1:50.
  */
-public class WMAStatusBarUtil {
+public class StatusBarUtil {
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
 
     /**
@@ -45,10 +45,10 @@ public class WMAStatusBarUtil {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             int count = decorView.getChildCount();
-            if (count > 0 && decorView.getChildAt(count - 1) instanceof WMAStatusBarView) {
+            if (count > 0 && decorView.getChildAt(count - 1) instanceof StatusBarView) {
                 decorView.getChildAt(count - 1).setBackgroundColor(calculateStatusColor(color, statusBarAlpha));
             } else {
-                WMAStatusBarView statusView = createStatusBarView(activity, color, statusBarAlpha);
+                StatusBarView statusView = createStatusBarView(activity, color, statusBarAlpha);
                 decorView.addView(statusView);
             }
             setRootView(activity);
@@ -242,11 +242,11 @@ public class WMAStatusBarUtil {
         // 生成一个状态栏大小的矩形
         // 添加 statusBarView 到布局中
         ViewGroup contentLayout = (ViewGroup) drawerLayout.getChildAt(0);
-        if (contentLayout.getChildCount() > 0 && contentLayout.getChildAt(0) instanceof WMAStatusBarView) {
+        if (contentLayout.getChildCount() > 0 && contentLayout.getChildAt(0) instanceof StatusBarView) {
             contentLayout.getChildAt(0).setBackgroundColor(color);
         } else {
-            WMAStatusBarView WMAStatusBarView = createStatusBarView(activity, color);
-            contentLayout.addView(WMAStatusBarView, 0);
+            StatusBarView StatusBarView = createStatusBarView(activity, color);
+            contentLayout.addView(StatusBarView, 0);
         }
         // 内容布局不是 LinearLayout 时,设置padding top
         if (!(contentLayout instanceof LinearLayout) && contentLayout.getChildAt(1) != null) {
@@ -286,12 +286,12 @@ public class WMAStatusBarUtil {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 生成一个状态栏大小的矩形
             ViewGroup contentLayout = (ViewGroup) drawerLayout.getChildAt(0);
-            if (contentLayout.getChildCount() > 0 && contentLayout.getChildAt(0) instanceof WMAStatusBarView) {
+            if (contentLayout.getChildCount() > 0 && contentLayout.getChildAt(0) instanceof StatusBarView) {
                 contentLayout.getChildAt(0).setBackgroundColor(calculateStatusColor(color, DEFAULT_STATUS_BAR_ALPHA));
             } else {
                 // 添加 statusBarView 到布局中
-                WMAStatusBarView WMAStatusBarView = createStatusBarView(activity, color);
-                contentLayout.addView(WMAStatusBarView, 0);
+                StatusBarView StatusBarView = createStatusBarView(activity, color);
+                contentLayout.addView(StatusBarView, 0);
             }
             // 内容布局不是 LinearLayout 时,设置padding top
             if (!(contentLayout instanceof LinearLayout) && contentLayout.getChildAt(1) != null) {
@@ -457,7 +457,7 @@ public class WMAStatusBarUtil {
     private static void clearPreviousSetting(Activity activity) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         int count = decorView.getChildCount();
-        if (count > 0 && decorView.getChildAt(count - 1) instanceof WMAStatusBarView) {
+        if (count > 0 && decorView.getChildAt(count - 1) instanceof StatusBarView) {
             decorView.removeViewAt(count - 1);
             ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
             rootView.setPadding(0, 0, 0, 0);
@@ -486,14 +486,14 @@ public class WMAStatusBarUtil {
      * @param color    状态栏颜色值
      * @return 状态栏矩形条
      */
-    private static WMAStatusBarView createStatusBarView(Activity activity, @ColorInt int color) {
+    private static StatusBarView createStatusBarView(Activity activity, @ColorInt int color) {
         // 绘制一个和状态栏一样高的矩形
-        WMAStatusBarView WMAStatusBarView = new WMAStatusBarView(activity);
+        StatusBarView StatusBarView = new StatusBarView(activity);
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
-        WMAStatusBarView.setLayoutParams(params);
-        WMAStatusBarView.setBackgroundColor(color);
-        return WMAStatusBarView;
+        StatusBarView.setLayoutParams(params);
+        StatusBarView.setBackgroundColor(color);
+        return StatusBarView;
     }
 
     /**
@@ -504,14 +504,14 @@ public class WMAStatusBarUtil {
      * @param alpha    透明值
      * @return 状态栏矩形条
      */
-    private static WMAStatusBarView createStatusBarView(Activity activity, @ColorInt int color, int alpha) {
+    private static StatusBarView createStatusBarView(Activity activity, @ColorInt int color, int alpha) {
         // 绘制一个和状态栏一样高的矩形
-        WMAStatusBarView WMAStatusBarView = new WMAStatusBarView(activity);
+        StatusBarView StatusBarView = new StatusBarView(activity);
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
-        WMAStatusBarView.setLayoutParams(params);
-        WMAStatusBarView.setBackgroundColor(calculateStatusColor(color, alpha));
-        return WMAStatusBarView;
+        StatusBarView.setLayoutParams(params);
+        StatusBarView.setBackgroundColor(calculateStatusColor(color, alpha));
+        return StatusBarView;
     }
 
     /**
@@ -564,14 +564,14 @@ public class WMAStatusBarUtil {
      * @param alpha 透明值
      * @return 半透明 View
      */
-    private static WMAStatusBarView createTranslucentStatusBarView(Activity activity, int alpha) {
+    private static StatusBarView createTranslucentStatusBarView(Activity activity, int alpha) {
         // 绘制一个和状态栏一样高的矩形
-        WMAStatusBarView WMAStatusBarView = new WMAStatusBarView(activity);
+        StatusBarView StatusBarView = new StatusBarView(activity);
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
-        WMAStatusBarView.setLayoutParams(params);
-        WMAStatusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
-        return WMAStatusBarView;
+        StatusBarView.setLayoutParams(params);
+        StatusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
+        return StatusBarView;
     }
 
     /**
