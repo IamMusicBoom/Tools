@@ -14,7 +14,7 @@ import retrofit2.http.QueryMap;
  */
 public interface IAllApi {
 
-    static String HOST = "http://v.juhe.cn/";
+    static String HOST = "https://v.juhe.cn/";
 
     @GET("toutiao/index")
     Observable<BModel> getNews(@Query("type") String type, @QueryMap Map<String,String> map);
