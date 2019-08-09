@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.wma.wmalib.common.LogUtils;
 import com.wma.wmalib.loading.LoadingHandler;
 import com.wma.wmalib.widget.NavigationBar;
 
@@ -21,8 +20,31 @@ import app.BaseAppContext;
 /**
  * Created by 王明骜 on 19-8-6 下午3:31.
  */
-public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
+
+    /**
+     * 是否初始化过布局
+     */
+    protected boolean isViewInitiated = false;
+
+    protected boolean isFirstLoad = true;
+    /**
+     * 当前界面是否可见
+     */
+    protected boolean isVisibleToUser = false;
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        isViewInitiated = false;
+
+        isFirstLoad = true;
+
+        isVisibleToUser = false;
+    }
 
     public LinearLayout mRootView;
     Context mContext = BaseAppContext.getInstance();
@@ -34,6 +56,7 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        isViewInitiated = true;
         return this.createRootView(container);
     }
 
@@ -51,7 +74,7 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     }
 
     private View createContentView(ViewGroup container) {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),getContentLayoutId(),container,false);
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), getContentLayoutId(), container, false);
         return mContentBinding.getRoot();
     }
 
@@ -64,27 +87,47 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        onCreate(savedInstanceState,mContentBinding);
+        isViewInitiated = true;
+        onCreate(savedInstanceState, mContentBinding);
+        if(isFirstLoad && isViewInitiated && isVisibleToUser){
+            loadData();
+            isFirstLoad = false;
+        }
     }
 
-    public void setTitle(String title,View.OnClickListener listener){
-        mNavBar.setNavBarVisible();
-        mNavBar.setTitle(title,listener);
+    protected  void loadData(){
+
     }
 
-    public void setRightText(String msg,int imgId,View.OnClickListener listener){
+    public void setTitle(String title, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
-        mNavBar.registerRightText(msg,imgId,listener);
+        mNavBar.setTitle(title, listener);
     }
-    public void setLeftText(String msg,int imgId,View.OnClickListener listener){
+
+    public void setRightText(String msg, int imgId, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
-        mNavBar.registerLeftText(msg,imgId,listener);
+        mNavBar.registerRightText(msg, imgId, listener);
+    }
+
+    public void setLeftText(String msg, int imgId, View.OnClickListener listener) {
+        mNavBar.setNavBarVisible();
+        mNavBar.registerLeftText(msg, imgId, listener);
     }
 
     public abstract int getContentLayoutId();
 
     public abstract void onCreate(Bundle savedInstanceState, T binding);
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if(this.isVisibleToUser && isFirstLoad && isViewInitiated){
+            isFirstLoad = false;
+            loadData();
+        }
+    }
 
 
     // region Loading dialog
@@ -112,4 +155,7 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
         if (_loadingHandler != null)
             _loadingHandler.hideLoading();
     }
+
+
+
 }

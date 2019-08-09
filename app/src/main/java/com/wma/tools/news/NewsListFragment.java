@@ -31,25 +31,6 @@ public class NewsListFragment extends BaseListFragment<FragmentNewsListBinding> 
         mBinding = binding;
         mParent = ((NewsFragment) getParentFragment());
         mParentBinding = ((NewsFragment) getParentFragment()).mBinding;
-//        goGetDatas(mParent.keyType.get(pageTitle));
-        mParentBinding.tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                CharSequence text = tab.getText();
-                mBinding.tv.setText(text);
-//                goGetDatas(mParent.keyType.get(text));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     private void goGetDatas(String s) {
@@ -88,9 +69,9 @@ public class NewsListFragment extends BaseListFragment<FragmentNewsListBinding> 
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-
-
-        super.setUserVisibleHint(isVisibleToUser);
+    protected void loadData() {
+        Log.d("WMA-WMA", "loadData: " + this);
+        String s = mParent.keyType.get(mParent.adapter.getPageTitle(mParentBinding.viewpager.getCurrentItem()));
+        goGetDatas(s);
     }
 }
