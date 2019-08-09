@@ -4,4 +4,10 @@
         <attr name="isVertical" format="boolean"/>
         <attr name="canScroll" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="WTextView">
+        <attr name="checked_color" format="color|reference"/>
+        <attr name="unchecked_color" format="color|reference"/>
+        <attr name="checked_drawable" format="reference"/>
+        <attr name="unchecked_drawable" format="reference"/>
+    </declare-styleable>
 </resources>

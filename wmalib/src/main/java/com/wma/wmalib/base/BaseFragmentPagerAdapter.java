@@ -1,5 +1,6 @@
 package com.wma.wmalib.base;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,20 +10,28 @@ import java.util.List;
 /**
  * Created by 王明骜 on 19-8-7 上午11:08.
  */
-public abstract class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
-    public BaseFragmentPagerAdapter(FragmentManager fm) {
+public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
+    List<Fragment> mFragments;
+    List<String> mTitles;
+    public BaseFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
+        this.mFragments = fragments;
+        this.mTitles = titles;
     }
 
     @Override
     public Fragment getItem(int i) {
-        return getFragments() != null ? getFragments().get(i) : null;
+        return mFragments != null ? mFragments.get(i) : null;
     }
 
     @Override
     public int getCount() {
-        return getFragments() != null ? getFragments().size() : 0;
+        return mFragments != null ? mFragments.size() : 0;
     }
 
-    public abstract List<Fragment> getFragments();
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles.get(position);
+    }
 }

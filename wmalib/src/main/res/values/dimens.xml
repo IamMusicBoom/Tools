@@ -6,4 +6,8 @@
     <dimen name="padding_view">10dp</dimen>
     <!--Title字体大小-->
     <dimen name="title_text_size">20sp</dimen>
+    <!--View的内边距小-->
+    <dimen name="padding_view_small">5dp</dimen>
+    <!--指示器文字大小-->
+    <dimen name="indicator_text">13sp</dimen>
 </resources>

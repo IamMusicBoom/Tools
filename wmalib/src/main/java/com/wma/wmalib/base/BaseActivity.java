@@ -79,7 +79,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
      * @return
      */
     private View createContentView() {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),mRootView,false);
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(this),getContentLayoutId(),mRootView,false);
         return mContentBinding.getRoot();
     }
 

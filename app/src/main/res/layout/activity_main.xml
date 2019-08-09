@@ -12,5 +12,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </com.wma.wmalib.widget.WViewPager>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabIndicatorColor="#00000000"
+            app:tabTextColor="@color/uncheck_color"
+            app:tabSelectedTextColor="@color/check_color"
+            android:background="@color/colorPrimary">
+        </android.support.design.widget.TabLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

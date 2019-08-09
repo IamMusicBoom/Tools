@@ -6,7 +6,7 @@
     android:layout_height="?android:attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:visibility="gone"
-    android:background="@color/colorAccent">
+    android:background="@color/colorPrimary">
     <TextView
         android:id="@+id/mid_tv"
         style="@style/NavigationBarText"
