@@ -1,9 +1,11 @@
 package com.wma.wmalib.base;
 
 import com.wma.wmalib.http.HttpUtils;
+import com.wma.wmalib.loading.LoadingHandler;
 
 import java.io.Serializable;
 
+import app.BaseAppContext;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,6 +18,4 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public abstract class BaseModel<T> implements Serializable {
 
     public abstract T getModel(Class<T> classes);
-
-
 }

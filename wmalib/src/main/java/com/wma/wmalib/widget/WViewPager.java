@@ -33,7 +33,7 @@ public class WViewPager extends ViewPager {
         isVertical = ta.getBoolean(R.styleable.WViewPager_isVertical,false);
 
         canScroll = ta.getBoolean(R.styleable.WViewPager_canScroll,true);
-        LogUtils.d("WMA-WMA","isVertical = " + isVertical + "  canScroll = " + canScroll);
+//        LogUtils.d("WMA-WMA","isVertical = " + isVertical + "  canScroll = " + canScroll);
         ta.recycle();
         if(isVertical){
             setPageTransformer(true, new VerticalPageTransformer());

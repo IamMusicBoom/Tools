@@ -1,8 +1,5 @@
 package com.wma.tools.model;
 
-import android.util.Log;
-
-import com.wma.tools.model.news.NewsModel;
 import com.wma.wmalib.base.BaseModel;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.http.HttpUtils;
@@ -13,7 +10,6 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -194,7 +190,6 @@ public class BModel extends BaseModel<IAllApi> {
         }
     }
 
-
     public void getDatas(String type, final HttpCallBack<ResultBean> callBack) {
         Map<String, String> map = new HashMap<>();
         map.put("key", "ddf058f205abc13f4a0bd68661b41f55");
@@ -204,12 +199,11 @@ public class BModel extends BaseModel<IAllApi> {
                 .subscribe(new Observer<BModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d("WMA-WMA", "onSubscribe: ");
+                        callBack.onBegin();
                     }
 
                     @Override
                     public void onNext(BModel bModel) {
-                        Log.d("WMA-WMA", "onNext: " + bModel);
                         if (bModel.getError_code() != 0) {
                             callBack.onFail(bModel.getReason());
                         } else if (bModel.getResult() == null) {
@@ -226,13 +220,12 @@ public class BModel extends BaseModel<IAllApi> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("WMA-WMA", "onError: " + e);
                         callBack.onError(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d("WMA-WMA", "onComplete: ");
+                        callBack.onComplete();
                     }
                 });
     }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.wma.wmalib.common.LogUtils;
+import com.wma.wmalib.loading.LoadingHandler;
 import com.wma.wmalib.widget.NavigationBar;
 
 import app.BaseAppContext;
@@ -21,6 +22,8 @@ import app.BaseAppContext;
  * Created by 王明骜 on 19-8-6 下午3:31.
  */
 public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment {
+
+
     public LinearLayout mRootView;
     Context mContext = BaseAppContext.getInstance();
 
@@ -48,7 +51,7 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     }
 
     private View createContentView(ViewGroup container) {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),getContentLayoutId(),container,false);
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),getContentLayoutId(),container,false);
         return mContentBinding.getRoot();
     }
 
@@ -81,4 +84,32 @@ public abstract  class BaseFragment<T extends ViewDataBinding> extends Fragment 
     public abstract int getContentLayoutId();
 
     public abstract void onCreate(Bundle savedInstanceState, T binding);
+
+
+
+    // region Loading dialog
+
+    private LoadingHandler _loadingHandler;
+
+    public void showLoading() {
+        if (_loadingHandler == null)
+            _loadingHandler = new LoadingHandler(getActivity());
+        _loadingHandler.showLoading();
+    }
+
+    public void showLoading(String message) {
+        if (_loadingHandler != null)
+            _loadingHandler.showLoading(message);
+    }
+
+    public void updateLoading(String message) {
+
+        if (_loadingHandler != null)
+            _loadingHandler.updateLoading(message);
+    }
+
+    public void hideLoading() {
+        if (_loadingHandler != null)
+            _loadingHandler.hideLoading();
+    }
 }

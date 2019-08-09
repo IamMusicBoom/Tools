@@ -3,21 +3,24 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-<TextView
-    android:id="@+id/tv"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:textSize="50sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:text="新闻"
-    android:gravity="center"/>
-</android.support.constraint.ConstraintLayout>
+    android:orientation="vertical">
+<android.support.design.widget.TabLayout
+    android:id="@+id/tab_layout"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    app:tabIndicatorColor="#00000000"
+    app:tabTextColor="@color/uncheck_color"
+    app:tabSelectedTextColor="@color/check_color"
+    app:tabMode="scrollable"
+    android:background="@color/colorPrimary">
+</android.support.design.widget.TabLayout>
+<com.wma.wmalib.widget.WViewPager
+    android:id="@+id/viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+</com.wma.wmalib.widget.WViewPager>
+</LinearLayout>
 </layout>

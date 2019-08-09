@@ -2,7 +2,6 @@ package com.wma.wmalib.base;
 
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,9 +9,9 @@ import android.support.v4.view.ViewPager;
 import java.util.List;
 
 /**
- * Created by 王明骜 on 19-8-7 上午10:18.
+ * Created by 王明骜 on 19-8-9 下午2:03.
  */
-public abstract class BaseTabActivity<T extends ViewDataBinding> extends BaseActivity<T> {
+public abstract class BaseTabFragment<T extends ViewDataBinding> extends BaseFragment<T> {
     public BaseFragmentPagerAdapter adapter;
 
     public abstract List<Fragment> getFragments();
@@ -28,7 +27,7 @@ public abstract class BaseTabActivity<T extends ViewDataBinding> extends BaseAct
 
     public void initViews() {
         if (adapter == null) {
-            adapter = new BaseFragmentPagerAdapter(getSupportFragmentManager(), getFragments(), getTitles());
+            adapter = new BaseFragmentPagerAdapter(getChildFragmentManager(), getFragments(), getTitles());
         }
         getViewPager().setAdapter(adapter);
 

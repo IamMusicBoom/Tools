@@ -70,7 +70,7 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
     public void onCreate(Bundle savedInstanceState, ActivityMainBinding binding) {
         mBinding = binding;
         initViews();
-        mBinding.viewpager.setOffscreenPageLimit(2);
+        mBinding.viewpager.setOffscreenPageLimit(3);
     }
 
     @Override
