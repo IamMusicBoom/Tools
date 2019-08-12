@@ -70,8 +70,8 @@ public class NewsListFragment extends BaseListFragment<FragmentNewsListBinding> 
 
     @Override
     protected void loadData() {
-        Log.d("WMA-WMA", "loadData: " + this);
         String s = mParent.keyType.get(mParent.adapter.getPageTitle(mParentBinding.viewpager.getCurrentItem()));
-        goGetDatas(s);
+        Log.d("WMA-WMA", "loadData: " + s + "   " + this);
+//        goGetDatas(s);
     }
 }
