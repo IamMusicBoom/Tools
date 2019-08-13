@@ -1,10 +1,12 @@
-package com.wma.wmalib.base;
+package com.wma.wmalib.base.fragment;
 
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+
+import com.wma.wmalib.base.adapter.BaseFragmentPagerAdapter;
 
 import java.util.List;
 

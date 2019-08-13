@@ -1,24 +1,18 @@
 package com.wma.tools;
 
 
-import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.wma.tools.databinding.ActivityMainBinding;
 import com.wma.tools.horoscope.HoroscopeFragment;
 import com.wma.tools.me.MeFragment;
 import com.wma.tools.news.NewsFragment;
 import com.wma.tools.weather.WeatherFragment;
-import com.wma.wmalib.base.BaseFragmentPagerAdapter;
-import com.wma.wmalib.base.BaseTabActivity;
+import com.wma.wmalib.base.activity.BaseTabActivity;
 
 import java.util.ArrayList;
 import java.util.List;

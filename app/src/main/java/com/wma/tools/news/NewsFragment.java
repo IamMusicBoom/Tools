@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentNewsBinding;
-import com.wma.tools.model.BModel;
-import com.wma.tools.model.news.NewsModel;
-import com.wma.wmalib.base.BaseFragment;
-import com.wma.wmalib.base.BaseTabFragment;
-import com.wma.wmalib.callback.HttpCallBack;
+import com.wma.wmalib.base.fragment.BaseTabFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

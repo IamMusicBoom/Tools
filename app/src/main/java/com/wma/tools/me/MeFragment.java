@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentMeBinding;
-import com.wma.wmalib.base.BaseFragment;
+import com.wma.wmalib.base.fragment.BaseFragment;
 
 /**
  * Created by 王明骜 on 19-8-7 上午11:03.

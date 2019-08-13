@@ -1,4 +1,4 @@
-package com.wma.wmalib.base;
+package com.wma.wmalib.base.fragment;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -89,10 +89,15 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         super.onActivityCreated(savedInstanceState);
         isViewInitiated = true;
         onCreate(savedInstanceState, mContentBinding);
+        initRecyclerView();
         if(isFirstLoad && isViewInitiated && isVisibleToUser){
             loadData();
             isFirstLoad = false;
         }
+    }
+
+    public void initRecyclerView() {
+
     }
 
     protected  void loadData(){

@@ -1,4 +1,4 @@
-package com.wma.wmalib.base;
+package com.wma.wmalib.base.activity;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

@@ -160,7 +160,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
      * Empty View is shown.
      * <p/>
      * Please note, you do <strong>not</strong> usually need to call this method
-     * yourself. Calling setEmptyView on the AdapterView will automatically call
+     * yourself. Calling showEmptyView on the AdapterView will automatically call
      * this method and set everything up. This includes when the Android
      * Framework automatically sets the Empty View based on it's ID.
      *

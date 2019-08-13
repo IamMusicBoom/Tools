@@ -19,21 +19,21 @@ import android.view.View;
 
 /**
  * Interface that allows PullToRefreshBase to hijack the call to
- * AdapterView.setEmptyView()
+ * AdapterView.showEmptyView()
  *
  * @author chris
  */
 public interface EmptyViewMethodAccessor {
 
     /**
-     * Calls upto AdapterView.setEmptyView()
+     * Calls upto AdapterView.showEmptyView()
      *
      * @param emptyView - to set as Empty View
      */
     public void setEmptyViewInternal(View emptyView);
 
     /**
-     * Should call PullToRefreshBase.setEmptyView() which will then
+     * Should call PullToRefreshBase.showEmptyView() which will then
      * automatically call through to setEmptyViewInternal()
      *
      * @param emptyView - to set as Empty View

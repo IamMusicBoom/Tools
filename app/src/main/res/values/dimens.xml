@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="NewsTitle">15sp</dimen>
+
+    <dimen name="NewsSubTitle">13sp</dimen>
+
+    <dimen name="NewTitlePadding">10dp</dimen>
+    <dimen name="NewSubTitlePadding">10dp</dimen>
+</resources>

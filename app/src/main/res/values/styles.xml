@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="NewsTitleTv">
+        <item name="android:textSize">@dimen/NewsTitle</item>
+        <item name="android:textColor">@color/title_news_color</item>
+        <item name="android:padding">@dimen/NewTitlePadding</item>
+
+    </style>
+
+    <style name="NewsSubTitleTv">
+        <item name="android:textSize">@dimen/NewsSubTitle</item>
+        <item name="android:textColor">@color/sub_title_news_color</item>
+        <item name="android:padding">@dimen/NewSubTitlePadding</item>
+    </style>
+
+
 </resources>
