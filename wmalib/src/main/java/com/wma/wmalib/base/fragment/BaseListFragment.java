@@ -8,7 +8,7 @@ import android.view.View;
 import com.wma.wmalib.base.GridSpaceItemDecoration;
 import com.wma.wmalib.base.SpaceItemDecoration;
 import com.wma.wmalib.base.adapter.BaseRecyclerViewAdapter;
-import com.wma.wmalib.common.Common;
+import com.wma.wmalib.common.WCommon;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshBase;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshRecyclerView;
 
@@ -111,7 +111,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
     }
 
     protected int style() {
-        return Common.LINEAR;
+        return WCommon.LINEAR;
     }
 
     /**
@@ -142,6 +142,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
     public void onDestroyView() {
         super.onDestroyView();
         mRecyclerView = null;
+        mAdapter = null;
     }
 
     @Override
@@ -160,7 +161,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
         }
 
         if (mRecyclerView != null) {
-            if (style() == Common.LINEAR) {
+            if (style() == WCommon.LINEAR) {
                 mRecyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
                 mRecyclerView.getRefreshableView().addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
             } else {
@@ -184,7 +185,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
 
     public abstract void getListData();
 
-    public abstract int getItemLayout(int viewTyoe);
+    public abstract int getItemLayout(int viewType);
 
     public abstract void bindItemData(E e, T info, int position);
 

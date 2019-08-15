@@ -1,24 +1,18 @@
 package com.wma.tools.news;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentNewsBinding;
 import com.wma.tools.databinding.FragmentNewsListBinding;
 import com.wma.tools.databinding.ItemNewsBinding;
-import com.wma.tools.model.BModel;
 import com.wma.tools.model.news.NewsModel;
 import com.wma.wmalib.base.adapter.BaseRecyclerViewAdapter;
-import com.wma.wmalib.base.fragment.BaseFragment;
 import com.wma.wmalib.base.fragment.BaseListFragment;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.glide.GlideUtil;
@@ -48,8 +42,22 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
         mRecyclerView = (PullToRefreshRecyclerView) ((ViewGroup) mBinding.getRoot()).getChildAt(0);
     }
 
-    private void goGetDatas(String s) {
-        new NewsModel().getDatas(s, new HttpCallBack<BModel.ResultBean>() {
+
+    @Override
+    protected void loadData() {
+        getListData();
+
+    }
+
+    @Override
+    protected View getEmptyView() {
+        return ((ViewGroup) mBinding.getRoot()).getChildAt(1);
+    }
+
+    @Override
+    public void getListData() {
+        String s = mParent.keyType.get(mParent.adapter.getPageTitle(mParentBinding.viewpager.getCurrentItem()));
+        new NewsModel().getDatas(s, new HttpCallBack<NewsModel.ResultBean>() {
             @Override
             public void onBegin() {
 //                Log.d("WMA-WMA", "onBegin: ");
@@ -73,9 +81,9 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
             }
 
             @Override
-            public void onSuccess(BModel.ResultBean resultBean) {
+            public void onSuccess(NewsModel.ResultBean resultBean) {
 //                Log.d("WMA-WMA", "onSuccess: ");
-                List<BModel.ResultBean.DataBean> data = resultBean.getData();
+                List<NewsModel.ResultBean.DataBean> data = resultBean.getData();
                 handleData(data);
             }
 
@@ -96,25 +104,7 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
     }
 
     @Override
-    protected void loadData() {
-        getListData();
-
-    }
-
-    @Override
-    protected View getEmptyView() {
-        return ((ViewGroup) mBinding.getRoot()).getChildAt(1);
-    }
-
-    @Override
-    public void getListData() {
-        String s = mParent.keyType.get(mParent.adapter.getPageTitle(mParentBinding.viewpager.getCurrentItem()));
-        Log.d("WMA-WMA", "handleData: " + s + "   " + this);
-        goGetDatas(s);
-    }
-
-    @Override
-    public int getItemLayout(int viewTyoe) {
+    public int getItemLayout(int viewType) {
         return R.layout.item_news;
     }
 

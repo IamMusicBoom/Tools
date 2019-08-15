@@ -8,7 +8,9 @@ import android.support.v4.view.ViewPager;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentNewsBinding;
+import com.wma.tools.model.IAllApi;
 import com.wma.wmalib.base.fragment.BaseTabFragment;
+import com.wma.wmalib.http.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
 
     @Override
     public void onCreate(Bundle savedInstanceState,  FragmentNewsBinding binding) {
+        HttpUtils.httpUtils.init(IAllApi.NEWS_HOST);
         mBinding = binding;
        initViews();
         keyType.put("头条","top");

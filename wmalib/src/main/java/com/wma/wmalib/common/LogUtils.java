@@ -8,18 +8,18 @@ import android.util.Log;
 public class LogUtils {
 
     public static void d(String TAG,String msg){
-        Log.d(Common.TAG,TAG + ": " + msg);
+        Log.d(WCommon.TAG,TAG + ": " + msg);
     }
     public static void w(String TAG,String msg){
-        Log.w(Common.TAG,TAG + ": " + msg);
+        Log.w(WCommon.TAG,TAG + ": " + msg);
     }
     public static void e(String TAG,String msg){
-        Log.e(Common.TAG,TAG + ": " + msg);
+        Log.e(WCommon.TAG,TAG + ": " + msg);
     }
     public static void i(String TAG,String msg){
-        Log.i(Common.TAG,TAG + ": " + msg);
+        Log.i(WCommon.TAG,TAG + ": " + msg);
     }
     public static void v(String TAG,String msg){
-        Log.v(Common.TAG,TAG + ": " + msg);
+        Log.v(WCommon.TAG,TAG + ": " + msg);
     }
 }

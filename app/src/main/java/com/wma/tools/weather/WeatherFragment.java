@@ -19,7 +19,6 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
 
     @Override
     public void onCreate(Bundle savedInstanceState, FragmentWeatherBinding binding) {
-        String url = "https://06imgmini.eastday.com/mobile/20190809/2019080908_7d70064570134db9b069b736af3fcc19_0811_mwpm_03200403.jpg";
-        GlideUtil.getInstance().loadImage(ToolApplication.getInstance(),binding.img,url,false);
+
     }
 }

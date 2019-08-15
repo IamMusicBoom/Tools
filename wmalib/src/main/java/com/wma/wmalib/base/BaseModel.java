@@ -17,5 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class BaseModel<T> implements Serializable {
 
+    public void BaseModel(){
+
+    }
     public abstract T getModel(Class<T> classes);
 }

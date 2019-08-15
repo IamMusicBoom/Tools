@@ -14,12 +14,8 @@ public abstract class BaseAppContext extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         appContext = this;
-
-        HttpUtils.getInstance().init(getHost());
-
     }
 
-    public abstract String getHost() ;
 
     public static BaseAppContext getInstance() {
         return appContext;

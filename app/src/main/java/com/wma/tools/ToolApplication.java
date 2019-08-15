@@ -1,6 +1,8 @@
 package com.wma.tools;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.wma.tools.model.IAllApi;
+import com.wma.wmalib.http.HttpUtils;
 
 import app.BaseAppContext;
 
@@ -11,11 +13,10 @@ public class ToolApplication extends BaseAppContext {
     @Override
     public void onCreate() {
         super.onCreate();
-
-    }
-
-    @Override
-    public String getHost() {
-        return IAllApi.HOST;
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+        HttpUtils.getInstance().init(IAllApi.NEWS_HOST);
     }
 }

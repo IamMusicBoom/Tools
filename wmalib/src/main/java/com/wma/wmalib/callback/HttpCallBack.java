@@ -1,5 +1,7 @@
 package com.wma.wmalib.callback;
 
+import java.util.List;
+
 /**
  * Created by 王明骜 on 19-8-9 上午10:50.
  */

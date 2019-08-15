@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
 
@@ -21,6 +22,15 @@
         <item name="android:textColor">@color/sub_title_news_color</item>
         <item name="android:padding">@dimen/NewSubTitlePadding</item>
     </style>
+
+    <style name="Welcome" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+        <!--<item name="android:windowDisablePreview">false</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <item name="android:windowBackground">@mipmap/welcome</item>
+        <!--<item name="android:background">@null</item>-->
+    </style>
+
 
 
 </resources>

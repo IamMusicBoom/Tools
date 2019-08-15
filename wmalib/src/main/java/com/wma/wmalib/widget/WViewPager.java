@@ -75,10 +75,18 @@ public class WViewPager extends ViewPager {
                 swapXY(ev);
                 return intercepted;
             }else{
-                return super.onInterceptTouchEvent(ev);
+                try {
+                    return super.onInterceptTouchEvent(ev);
+                }catch (IllegalArgumentException e){
+                    return false;
+                }
             }
         }else{
-            return super.onInterceptTouchEvent(ev);
+            try {
+                return super.onInterceptTouchEvent(ev);
+            }catch (IllegalArgumentException e){
+                return false;
+            }
         }
     }
 
