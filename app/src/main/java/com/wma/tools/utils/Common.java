@@ -1,11 +1,25 @@
 package com.wma.tools.utils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 王明骜 on 19-8-14 下午1:46.
  */
 public class Common {
+    public static Map<String,String> keyType = new HashMap<>();
+    static {
+        keyType.put("头条","top");
+        keyType.put("社会","shehui");
+        keyType.put("国内","guonei");
+        keyType.put("国际","guoji");
+        keyType.put("娱乐","yule");
+        keyType.put("体育","tiyu");
+        keyType.put("军事","junshi");
+        keyType.put("科技","keji");
+        keyType.put("财经","caijing");
+        keyType.put("时尚","shishang");
+    }
     public static final String WIDS = "wids.txt";
 
     public static final String CITIES = "cities.txt";

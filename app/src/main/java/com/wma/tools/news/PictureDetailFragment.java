@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -27,14 +28,20 @@ public class PictureDetailFragment extends BaseFragment<FragmentPictureDetialBin
     private PhotoView mImageView;
     private ProgressBar progressBar;
     private PhotoViewAttacher mAttacher;
+
+    @Override
+    protected void createContentView(ViewGroup container, FragmentPictureDetialBinding binding) {
+        mBinding = binding;
+    }
+
     @Override
     public int getContentLayoutId() {
         return R.layout.fragment_picture_detial;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, FragmentPictureDetialBinding binding) {
-        mBinding = binding;
+    public void create(Bundle savedInstanceState) {
+
         mImageUrl = getArguments() != null ? getArguments().getString("url") : null;
         mImageUrl = mImageUrl.replace("http://","https://");
         progressBar = mBinding.loading;

@@ -1,6 +1,7 @@
 package com.wma.tools.weather;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import com.wma.tools.R;
 import com.wma.tools.ToolApplication;
@@ -13,12 +14,18 @@ import com.wma.wmalib.glide.GlideUtil;
  */
 public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
     @Override
+    protected void createContentView(ViewGroup container, FragmentWeatherBinding binding) {
+
+    }
+
+    @Override
     public int getContentLayoutId() {
         return R.layout.fragment_weather;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, FragmentWeatherBinding binding) {
+    public void create(Bundle savedInstanceState) {
 
     }
+
 }

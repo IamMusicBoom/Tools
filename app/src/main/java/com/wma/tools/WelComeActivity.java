@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.haha.perflib.Main;
 import com.wma.tools.model.IAllApi;
 import com.wma.tools.model.weather.CityModel;
 import com.wma.tools.model.weather.WidsModel;
@@ -58,7 +59,7 @@ public class WelComeActivity extends Activity {
 
     private static void getLocation() {
 
-        
+
 
     }
 
@@ -68,6 +69,14 @@ public class WelComeActivity extends Activity {
         setContentView(R.layout.activity_welcome);
         HttpUtils.httpUtils.init(IAllApi.WEATHER_HOST);
         handler.sendEmptyMessage(GET_DATA);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        }).start();
     }
 
     private static void getCity() {

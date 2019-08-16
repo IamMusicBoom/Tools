@@ -26,7 +26,6 @@ import app.BaseAppContext;
 public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     AppManager appManager;
 
-   public LinearLayout mRootView;
 
     Context mContext = BaseAppContext.getInstance();
 
@@ -47,7 +46,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         //设置App Hierarchy View 可以查看
         ViewServer.get(this).addWindow(this);
 
-        onCreate(savedInstanceState,mContentBinding);
+        onCreate(savedInstanceState, mContentBinding);
 
 
     }
@@ -58,10 +57,11 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
 
     /**
      * 创建根视图
+     *
      * @return
      */
     private View createRootView() {
-        mRootView = new LinearLayout(mContext);
+        LinearLayout mRootView = new LinearLayout(mContext);
         mRootView.setOrientation(LinearLayout.VERTICAL);
         mRootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
@@ -69,22 +69,24 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         mRootView.addView(createNavBar());
 
 
-        mRootView.addView(createContentView());
+        mRootView.addView(createContentView(mRootView));
 
         return mRootView;
     }
 
     /**
      * 创建内容区域
+     *
      * @return
      */
-    private View createContentView() {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(this),getContentLayoutId(),mRootView,false);
+    private View createContentView(LinearLayout mRootView) {
+        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(this), getContentLayoutId(), mRootView, false);
         return mContentBinding.getRoot();
     }
 
     /**
      * 创建title
+     *
      * @return
      */
     private View createNavBar() {
@@ -95,7 +97,7 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        if(appManager != null){
+        if (appManager != null) {
             appManager.finalize(this);
         }
     }
@@ -116,17 +118,18 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
         ViewServer.get(this).setFocusedWindow(this);
     }
 
-    public void setTitle(String title,View.OnClickListener listener){
+    public void setTitle(String title, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
-        mNavBar.setTitle(title,listener);
+        mNavBar.setTitle(title, listener);
     }
 
-    public void setRightText(String msg,int imgId,View.OnClickListener listener){
+    public void setRightText(String msg, int imgId, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
-        mNavBar.registerRightText(msg,imgId,listener);
+        mNavBar.registerRightText(msg, imgId, listener);
     }
-    public void setLeftText(String msg,int imgId,View.OnClickListener listener){
+
+    public void setLeftText(String msg, int imgId, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
-        mNavBar.registerLeftText(msg,imgId,listener);
+        mNavBar.registerLeftText(msg, imgId, listener);
     }
 }

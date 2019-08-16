@@ -46,12 +46,11 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         isVisibleToUser = false;
     }
 
-    public LinearLayout mRootView;
+
     Context mContext = BaseAppContext.getInstance();
 
     public NavigationBar mNavBar;
 
-    T mContentBinding;
 
     @Nullable
     @Override
@@ -61,7 +60,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     }
 
     private View createRootView(ViewGroup container) {
-        mRootView = new LinearLayout(mContext);
+        LinearLayout mRootView = new LinearLayout(mContext);
         mRootView.setOrientation(LinearLayout.VERTICAL);
         mRootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
@@ -74,9 +73,13 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     }
 
     private View createContentView(ViewGroup container) {
-        mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), getContentLayoutId(), container, false);
+        T mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), getContentLayoutId(), container, false);
+        createContentView(container,mContentBinding);
         return mContentBinding.getRoot();
     }
+
+    protected abstract void createContentView(ViewGroup container, T binding);
+
 
     private View createNavBar() {
         mNavBar = new NavigationBar(mContext);
@@ -88,7 +91,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewInitiated = true;
-        onCreate(savedInstanceState, mContentBinding);
+        create(savedInstanceState);
         initRecyclerView();
         if(isFirstLoad && isViewInitiated && isVisibleToUser){
             loadData();
@@ -121,7 +124,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
     public abstract int getContentLayoutId();
 
-    public abstract void onCreate(Bundle savedInstanceState, T binding);
+    public abstract void create(Bundle savedInstanceState);
 
 
     @Override

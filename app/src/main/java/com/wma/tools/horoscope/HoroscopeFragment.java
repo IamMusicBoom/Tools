@@ -1,6 +1,7 @@
 package com.wma.tools.horoscope;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentHoroscopeBinding;
@@ -11,12 +12,18 @@ import com.wma.wmalib.base.fragment.BaseFragment;
  */
 public class HoroscopeFragment extends BaseFragment<FragmentHoroscopeBinding> {
     @Override
+    protected void createContentView(ViewGroup container, FragmentHoroscopeBinding binding) {
+
+    }
+
+    @Override
     public int getContentLayoutId() {
         return R.layout.fragment_horoscope;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, FragmentHoroscopeBinding binding) {
+    public void create(Bundle savedInstanceState) {
 
     }
+
 }
