@@ -1,19 +1,24 @@
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
        >
 
-       <WebView
+       <com.wma.wmalib.widget.ProgressBarWebView
            android:id="@+id/web_view"
            android:layout_width="match_parent"
-           android:layout_height="match_parent"></WebView>
-    </LinearLayout>
+           android:layout_height="match_parent">
+       </com.wma.wmalib.widget.ProgressBarWebView>
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/view_empty"/>
+    </android.support.constraint.ConstraintLayout>
 </layout>

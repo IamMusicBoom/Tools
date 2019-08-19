@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<TextView
+    android:id="@+id/empty_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="找不到数据"
+    android:gravity="center"
+    android:visibility="gone"
+    android:drawablePadding="20dp"
+    android:drawableTop="@mipmap/error"
+    android:textSize="25sp" />

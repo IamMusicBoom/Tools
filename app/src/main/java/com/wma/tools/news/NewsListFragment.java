@@ -16,6 +16,7 @@ import com.wma.tools.model.news.NewsModel;
 import com.wma.wmalib.base.adapter.BaseRecyclerViewAdapter;
 import com.wma.wmalib.base.fragment.BaseListFragment;
 import com.wma.wmalib.callback.HttpCallBack;
+import com.wma.wmalib.common.LogUtils;
 import com.wma.wmalib.glide.GlideUtil;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshBase;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshRecyclerView;
@@ -30,6 +31,8 @@ import java.util.List;
 public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.DataBean, ItemNewsBinding, FragmentNewsListBinding> {
     WeakReference<FragmentNewsListBinding> mWeakBinding;
     String key = "";
+
+    String TAG = this.getClass().getSimpleName();
 
     public static NewsListFragment newInstance(String title) {
         NewsListFragment fragment = new NewsListFragment();
@@ -103,13 +106,14 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
             @Override
             public void onFail(String e) {
                 showEmptyView(true);
-
+                LogUtils.d(TAG,e);
             }
 
             @Override
             public void onError(Throwable e) {
                 hideLoading();
                 showEmptyView(true);
+                LogUtils.d(TAG,e.toString());
 
             }
         });

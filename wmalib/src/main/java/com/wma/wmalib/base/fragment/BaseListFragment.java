@@ -135,6 +135,13 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
         }
 
         mEmptyView.setVisibility(show ? View.VISIBLE : View.GONE);
+
+        if(mEmptyView.getVisibility() == View.VISIBLE){
+            mRecyclerView.setVisibility(View.GONE);
+        }else{
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override

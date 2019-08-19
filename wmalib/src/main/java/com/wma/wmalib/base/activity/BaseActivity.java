@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.android.debug.hv.ViewServer;
 import com.wma.wmalib.common.LogUtils;
+import com.wma.wmalib.loading.LoadingHandler;
 import com.wma.wmalib.widget.NavigationBar;
 
 import app.AppManager;
@@ -131,5 +132,34 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends AppCompatA
     public void setLeftText(String msg, int imgId, View.OnClickListener listener) {
         mNavBar.setNavBarVisible();
         mNavBar.registerLeftText(msg, imgId, listener);
+    }
+
+
+
+    // region Loading dialog
+
+    private LoadingHandler _loadingHandler;
+
+    public void showLoading() {
+        if (_loadingHandler == null)
+            _loadingHandler = new LoadingHandler(this);
+        _loadingHandler.showLoading();
+    }
+
+    public void showLoading(String message) {
+        if (_loadingHandler == null)
+            _loadingHandler = new LoadingHandler(this);
+        _loadingHandler.showLoading(message);
+    }
+
+    public void updateLoading(String message) {
+
+        if (_loadingHandler != null)
+            _loadingHandler.updateLoading(message);
+    }
+
+    public void hideLoading() {
+        if (_loadingHandler != null)
+            _loadingHandler.hideLoading();
     }
 }

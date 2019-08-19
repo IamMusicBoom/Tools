@@ -52,10 +52,9 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
         mNavBar = null;
 
+        _loadingHandler = null;
+
     }
-
-
-
 
 
     @Nullable
@@ -80,7 +79,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
     private View createContentView(ViewGroup container) {
         T mContentBinding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), getContentLayoutId(), container, false);
-        createContentView(container,mContentBinding);
+        createContentView(container, mContentBinding);
         return mContentBinding.getRoot();
     }
 
@@ -99,7 +98,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         isViewInitiated = true;
         create(savedInstanceState);
         initRecyclerView();
-        if(isFirstLoad && isViewInitiated && isVisibleToUser){
+        if (isFirstLoad && isViewInitiated && isVisibleToUser) {
             loadData();
             isFirstLoad = false;
         }
@@ -109,7 +108,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
 
     }
 
-    protected  void loadData(){
+    protected void loadData() {
 
     }
 
@@ -138,7 +137,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
 
-        if(this.isVisibleToUser && isFirstLoad && isViewInitiated){
+        if (this.isVisibleToUser && isFirstLoad && isViewInitiated) {
             isFirstLoad = false;
             loadData();
         }
@@ -156,8 +155,9 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     }
 
     public void showLoading(String message) {
-        if (_loadingHandler != null)
-            _loadingHandler.showLoading(message);
+        if (_loadingHandler == null)
+            _loadingHandler = new LoadingHandler(getActivity());
+        _loadingHandler.showLoading(message);
     }
 
     public void updateLoading(String message) {
@@ -170,7 +170,6 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         if (_loadingHandler != null)
             _loadingHandler.hideLoading();
     }
-
 
 
 }

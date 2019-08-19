@@ -17,6 +17,7 @@ public class LoadingHandler {
     private boolean mHideLoading;
 
     public LoadingHandler(Context context) {
+
         mContext = context;
     }
 
