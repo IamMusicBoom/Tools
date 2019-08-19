@@ -70,4 +70,10 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
     public int getContentLayoutId() {
         return R.layout.activity_main;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
+    }
 }

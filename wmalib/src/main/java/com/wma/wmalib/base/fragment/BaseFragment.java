@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,13 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     /**
      * 是否初始化过布局
      */
-    protected boolean isViewInitiated = false;
+    public boolean isViewInitiated = false;
 
-    protected boolean isFirstLoad = true;
+    public boolean isFirstLoad = true;
     /**
      * 当前界面是否可见
      */
-    protected boolean isVisibleToUser = false;
+    public boolean isVisibleToUser = false;
 
     Context mContext = BaseAppContext.getInstance();
 
@@ -60,7 +61,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        isViewInitiated = true;
+
         return this.createRootView(container);
     }
 
@@ -136,6 +137,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
+
         if(this.isVisibleToUser && isFirstLoad && isViewInitiated){
             isFirstLoad = false;
             loadData();

@@ -61,6 +61,7 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
 
     @Override
     protected void loadData() {
+
         getListData();
 
     }
@@ -75,13 +76,11 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
         new NewsModel().getDatas(key, new HttpCallBack<NewsModel.ResultBean>() {
             @Override
             public void onBegin() {
-//                Log.d("WMA-WMA", "onBegin: ");
                 showLoading();
             }
 
             @Override
             public void onComplete() {
-//                Log.d("WMA-WMA", "onComplete: ");
                 hideLoading();
                 if (getAdapter() != null) {
                     getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<NewsModel.ResultBean.DataBean>() {
@@ -97,21 +96,18 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
 
             @Override
             public void onSuccess(NewsModel.ResultBean resultBean) {
-//                Log.d("WMA-WMA", "onSuccess: ");
                 List<NewsModel.ResultBean.DataBean> data = resultBean.getData();
                 handleData(data);
             }
 
             @Override
             public void onFail(String e) {
-//                Log.d("WMA-WMA", "onFail: " + e);
                 showEmptyView(true);
 
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("WMA-WMA", "onError: " + e);
                 hideLoading();
                 showEmptyView(true);
 

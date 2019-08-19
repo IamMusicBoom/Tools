@@ -46,7 +46,6 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
     public void handleData(List<T> _data) {
         if (mAdapter == null) {
             mAdapter = new BaseIViewDataRecyclerAdapter();
-            System.out.println("setAdapter");
 //            setLinearLayout();
             mRecyclerView.setAdapter(mAdapter);
         }

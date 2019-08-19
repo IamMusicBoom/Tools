@@ -43,8 +43,14 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
     public void create(Bundle savedInstanceState) {
         HttpUtils.httpUtils.init(IAllApi.NEWS_HOST);
 
-       initViews();
 
+
+    }
+
+    @Override
+    protected void loadData() {
+        super.loadData();
+        initViews();
     }
 
     @Override
@@ -81,9 +87,4 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d("WMA-WMA", "onDestroyView: " + this.getClass().getSimpleName());
-    }
 }
