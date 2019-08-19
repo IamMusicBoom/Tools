@@ -145,7 +145,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
      * Pass-through method for {@link PullToRefreshBase#getRefreshableView()
      * getRefreshableView()}.
      * {@link AdapterView#setAdapter(Adapter)}
-     * setAdapter(adapter)}. This is just for convenience!
+     * setAdapter(mAdapter)}. This is just for convenience!
      *
      * @param adapter - Adapter to set
      */

@@ -20,6 +20,7 @@ import com.wma.wmalib.glide.GlideUtil;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshBase;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshRecyclerView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by 王明骜 on 19-8-9 下午2:12.
  */
 public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.DataBean, ItemNewsBinding, FragmentNewsListBinding> {
-    FragmentNewsListBinding mBinding;
+    WeakReference<FragmentNewsListBinding> mWeakBinding;
     String key = "";
 
     public static NewsListFragment newInstance(String title) {
@@ -48,14 +49,14 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
     @Override
     public void create(Bundle savedInstanceState) {
 
-        mRecyclerView = (PullToRefreshRecyclerView) ((ViewGroup) mBinding.getRoot()).getChildAt(0);
+        mRecyclerView = (PullToRefreshRecyclerView) ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(0);
         key = getArguments() == null ? "" : getArguments().getString("key");
     }
 
 
     @Override
     protected void createContentView(ViewGroup container, FragmentNewsListBinding binding) {
-        mBinding = binding;
+        mWeakBinding = new WeakReference<>(binding);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
 
     @Override
     protected View getEmptyView() {
-        return ((ViewGroup) mBinding.getRoot()).getChildAt(1);
+        return ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(1);
     }
 
     @Override

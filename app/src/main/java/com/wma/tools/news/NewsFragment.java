@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.wma.tools.R;
@@ -15,6 +16,7 @@ import com.wma.wmalib.base.fragment.BaseFragment;
 import com.wma.wmalib.base.fragment.BaseTabFragment;
 import com.wma.wmalib.http.HttpUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +26,12 @@ import java.util.Map;
  * Created by 王明骜 on 19-8-6 下午3:48.
  */
 public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
-//public class NewsFragment extends BaseFragment<FragmentNewsBinding>{
-    public FragmentNewsBinding mBinding;
-    String titles[] = {"头条","社会","国内","国际","娱乐","体育","军事","科技","财经","时尚"};
+    public WeakReference<FragmentNewsBinding> mWeakBinding;
+    String titles[] = {"头条", "社会", "国内", "国际", "娱乐", "体育", "军事", "科技", "财经", "时尚"};
 
     @Override
     protected void createContentView(ViewGroup container, FragmentNewsBinding binding) {
-        mBinding = binding;
+        mWeakBinding = new WeakReference<>(binding);
     }
 
     @Override
@@ -57,12 +58,12 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
 
     @Override
     public ViewPager getViewPager() {
-        return mBinding.viewpager;
+        return mWeakBinding.get().viewpager;
     }
 
     @Override
     public TabLayout getTabLayout() {
-        return mBinding.tabLayout;
+        return mWeakBinding.get().tabLayout;
     }
 
     @Override
@@ -77,5 +78,12 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
     @Override
     public List<Drawable> getIcons() {
         return null;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("WMA-WMA", "onDestroyView: " + this.getClass().getSimpleName());
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 王明骜 on 19-8-9 下午2:03.
  */
 public abstract class BaseTabFragment<T extends ViewDataBinding> extends BaseFragment<T> {
-    public BaseFragmentPagerAdapter adapter;
+    public BaseFragmentPagerAdapter mAdapter;
 
     public abstract List<Fragment> getFragments();
 
@@ -28,10 +28,10 @@ public abstract class BaseTabFragment<T extends ViewDataBinding> extends BaseFra
 
 
     public void initViews() {
-        if (adapter == null) {
-            adapter = new BaseFragmentPagerAdapter(getChildFragmentManager(), getFragments(), getTitles());
+        if (mAdapter == null) {
+            mAdapter = new BaseFragmentPagerAdapter(getChildFragmentManager(), getFragments(), getTitles());
         }
-        getViewPager().setAdapter(adapter);
+        getViewPager().setAdapter(mAdapter);
 
 
         getTabLayout().setupWithViewPager(getViewPager());
@@ -47,5 +47,11 @@ public abstract class BaseTabFragment<T extends ViewDataBinding> extends BaseFra
             getTabLayout().addTab(tab);
         }
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter = null;
     }
 }

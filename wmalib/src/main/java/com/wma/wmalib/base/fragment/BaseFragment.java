@@ -34,6 +34,10 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
      */
     protected boolean isVisibleToUser = false;
 
+    Context mContext = BaseAppContext.getInstance();
+
+    public NavigationBar mNavBar;
+
 
     @Override
     public void onDestroyView() {
@@ -44,12 +48,13 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         isFirstLoad = true;
 
         isVisibleToUser = false;
+
+        mNavBar = null;
+
     }
 
 
-    Context mContext = BaseAppContext.getInstance();
 
-    public NavigationBar mNavBar;
 
 
     @Nullable

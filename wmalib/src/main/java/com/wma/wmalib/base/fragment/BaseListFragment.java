@@ -143,6 +143,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
         super.onDestroyView();
         mRecyclerView = null;
         mAdapter = null;
+        mEmptyView = null;
     }
 
     @Override
