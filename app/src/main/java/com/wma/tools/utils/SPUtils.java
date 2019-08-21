@@ -2,6 +2,7 @@ package com.wma.tools.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.EditText;
 
 import com.wma.tools.ToolApplication;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshBase;
@@ -13,9 +14,16 @@ public class SPUtils {
     private static String IS_LOAD_CITY = "is_load_city";
     private static String IS_LOAD_WID = "is_load_wid";
 
+    private static String CUR_CITY = "cur_city";
+    private static String CUR_DIST = "cur_dist";
+    private static String CUR_PROVINCE = "cur_province";
+
     private static Context mContext = ToolApplication.getInstance();
 
     private static SharedPreferences sp = mContext.getSharedPreferences(ToolApplication.class.getPackage().getName(),Context.MODE_PRIVATE);
+
+    //================== 天气模块 ==================
+
 
     public static void setIsLoadCity(boolean isLoad){
         SharedPreferences.Editor edit = sp.edit();
@@ -36,4 +44,36 @@ public class SPUtils {
         boolean aBoolean = sp.getBoolean(IS_LOAD_WID, false);
         return aBoolean;
     }
+
+    public static void setCurCity(String city){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(CUR_CITY,city);
+        edit.apply();
+    }
+    public static String getCurCity(){
+        String city = sp.getString(CUR_CITY, "成都");
+        return city;
+    }
+
+    public static void setCurDist(String dist){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(CUR_DIST,dist);
+        edit.apply();
+    }
+
+    public static String getCurDist(){
+        String dist = sp.getString(CUR_DIST, "双流");
+        return dist;
+    }
+
+    public static void setCurProvince(String province){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(CUR_PROVINCE,province);
+        edit.apply();
+    }
+    public static String getCurProvince(){
+        String province = sp.getString(CUR_PROVINCE, "四川");
+        return province;
+    }
+    //================== 天气模块 ==================
 }

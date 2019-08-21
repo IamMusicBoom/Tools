@@ -31,7 +31,4 @@ public class Common {
 
 
     public static HashMap<String,String> WID_MAP;
-
-    public static HashMap<String,String> CITY_MAP;
-
 }
