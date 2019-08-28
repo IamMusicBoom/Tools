@@ -30,7 +30,7 @@ public interface IAllApi {
 
 
     /**
-     * http://apis.juhe.cn/simpleWeather/query?city=成都&key=795896001e17442acb2ca48ae1ea3167
+     * http://apis.juhe.cn/simpleWeather/query?city=双流&key=795896001e17442acb2ca48ae1ea3167
      */
     static String WEATHER_HOST = "https://apis.juhe.cn/simpleWeather/";
 

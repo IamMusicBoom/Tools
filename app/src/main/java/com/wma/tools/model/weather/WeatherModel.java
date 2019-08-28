@@ -2,9 +2,17 @@ package com.wma.tools.model.weather;
 
 import com.wma.tools.model.IAllApi;
 import com.wma.wmalib.base.BaseModel;
+import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.http.HttpUtils;
 
+import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by 王明骜 on 19-8-13 上午10:19.
@@ -251,5 +259,41 @@ public class WeatherModel extends BaseModel<IAllApi> {
                 }
             }
         }
+    }
+
+    public void getDatas(String dist,final HttpCallBack<WeatherModel> callBack) {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("key","795896001e17442acb2ca48ae1ea3167");
+        Observable<WeatherModel> weather = iAllApi.getWeather(dist,map);
+        weather.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<WeatherModel>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        callBack.onBegin();
+                    }
+
+                    @Override
+                    public void onNext(WeatherModel weatherModel) {
+                        if (weatherModel.getError_code() != 0) {
+                            callBack.onFail(weatherModel.getReason());
+                        } else if (weatherModel.getResult() == null) {
+                            callBack.onFail("返回数据为空...");
+                        } else {
+                            callBack.onSuccess(weatherModel);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        callBack.onComplete();
+                    }
+                });
+
     }
 }

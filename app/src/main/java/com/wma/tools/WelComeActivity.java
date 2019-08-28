@@ -45,7 +45,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
     private static final int GET_DATA = 0;
 
 
-    private LocationManager mLocationManager;
+    private static LocationManager mLocationManager;
 
     private static final int REQUEST_PERMISSION_CODE = 12;
 
@@ -74,7 +74,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
         setContentView(R.layout.activity_welcome);
         HttpUtils.httpUtils.init(IAllApi.WEATHER_HOST);
         handler.sendEmptyMessage(GET_DATA);
-        getLocation();
+//        getLocation();
         goMain();
 
     }
@@ -219,7 +219,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
      * 开始定位
      */
     private void startLocate() {
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) ToolApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
         boolean providerEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         Log.d("WMA-WMA", "startLocate: providerEnabled = " + providerEnabled);
         if (providerEnabled) { //GPS已开启
@@ -262,7 +262,6 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
             Log.d("WMA-WMA", "地理位置: "+ LocationUtils.getAddress(ToolApplication.getInstance(),location.getLatitude(),location.getLongitude()));
             Log.d("WMA-WMA", "所在地: " + LocationUtils.getLocality(ToolApplication.getInstance(),location.getLatitude(),location.getLongitude()));
             Log.d("WMA-WMA", "街道: " + LocationUtils.getStreet(ToolApplication.getInstance(),location.getLatitude(),location.getLongitude()));
-            Common
         }
 
         @Override
@@ -322,6 +321,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("WMA-WMA", "onDestroy: " + this.getClass().getSimpleName());
         mLocationManager.removeUpdates(locationListener);
         locationListener = null;
         mLocationManager = null;
