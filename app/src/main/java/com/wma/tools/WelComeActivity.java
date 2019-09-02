@@ -239,7 +239,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
              * 参数4，监听
              * 备注：参数2和3，如果参数3不为0，则以参数3为准；参数3为0，则通过时间来定时更新；两者为0，则随时刷新
              */
-            mLocationManager.requestLocationUpdates(provider, 0, 0, locationListener);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         } else {
             Toast.makeText(this, "请打开GPS", Toast.LENGTH_SHORT).show();
         }
@@ -321,8 +321,9 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("WMA-WMA", "onDestroy: " + this.getClass().getSimpleName());
-        mLocationManager.removeUpdates(locationListener);
+        if(mLocationManager != null && locationListener != null){
+            mLocationManager.removeUpdates(locationListener);
+        }
         locationListener = null;
         mLocationManager = null;
     }

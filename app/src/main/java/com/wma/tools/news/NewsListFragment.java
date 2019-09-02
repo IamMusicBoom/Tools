@@ -63,7 +63,7 @@ public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.Data
     }
 
     @Override
-    protected void loadData() {
+    protected void lazyLoad() {
 
         getListData();
 

@@ -1,5 +1,7 @@
 package com.wma.tools.utils;
 
+import com.wma.tools.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +10,8 @@ import java.util.Map;
  */
 public class Common {
     public static Map<String,String> keyType = new HashMap<>();
+
+    public static HashMap<String,Integer> WID_IMG_MAP = new HashMap<>();
     static {
         keyType.put("头条","top");
         keyType.put("社会","shehui");
@@ -19,6 +23,46 @@ public class Common {
         keyType.put("科技","keji");
         keyType.put("财经","caijing");
         keyType.put("时尚","shishang");
+
+        WID_IMG_MAP.put("00", R.drawable.ic_00);
+        WID_IMG_MAP.put("01", R.drawable.ic_01);
+        WID_IMG_MAP.put("02", R.drawable.ic_02);
+        WID_IMG_MAP.put("03", R.drawable.ic_03);
+        WID_IMG_MAP.put("04", R.drawable.ic_04);
+        WID_IMG_MAP.put("05", R.drawable.ic_05);
+        WID_IMG_MAP.put("06", R.drawable.ic_06);
+        WID_IMG_MAP.put("07", R.drawable.ic_07);
+        WID_IMG_MAP.put("08", R.drawable.ic_08);
+        WID_IMG_MAP.put("09", R.drawable.ic_09);
+
+        WID_IMG_MAP.put("10", R.drawable.ic_10);
+        WID_IMG_MAP.put("11", R.drawable.ic_11);
+        WID_IMG_MAP.put("12", R.drawable.ic_12);
+        WID_IMG_MAP.put("13", R.drawable.ic_13);
+        WID_IMG_MAP.put("14", R.drawable.ic_14);
+        WID_IMG_MAP.put("15", R.drawable.ic_15);
+        WID_IMG_MAP.put("16", R.drawable.ic_16);
+        WID_IMG_MAP.put("17", R.drawable.ic_17);
+        WID_IMG_MAP.put("18", R.drawable.ic_18);
+        WID_IMG_MAP.put("19", R.drawable.ic_19);
+
+        WID_IMG_MAP.put("20", R.drawable.ic_20);
+        WID_IMG_MAP.put("21", R.drawable.ic_21);
+        WID_IMG_MAP.put("22", R.drawable.ic_22);
+        WID_IMG_MAP.put("23", R.drawable.ic_23);
+        WID_IMG_MAP.put("24", R.drawable.ic_24);
+        WID_IMG_MAP.put("25", R.drawable.ic_25);
+        WID_IMG_MAP.put("26", R.drawable.ic_26);
+        WID_IMG_MAP.put("27", R.drawable.ic_27);
+        WID_IMG_MAP.put("28", R.drawable.ic_28);
+        WID_IMG_MAP.put("29", R.drawable.ic_29);
+
+
+        WID_IMG_MAP.put("30", R.drawable.ic_30);
+        WID_IMG_MAP.put("31", R.drawable.ic_31);
+
+        WID_IMG_MAP.put("53", R.drawable.ic_53);
+
     }
     public static final String WIDS = "wids.txt";
 
@@ -31,4 +75,17 @@ public class Common {
 
 
     public static HashMap<String,String> WID_MAP;
+
+
+
+    public static final String CITY = "city";
+
+    public static final String AIQ = "aiq";
+    public static final String DIRECT = "direct";
+    public static final String HUMIDITY = "humidity";
+
+    public static final String INFO = "info";
+    public static final String POWER = "power";
+    public static final String TEMPERATURE = "temperature";
+    public static final String WID = "wid";
 }

@@ -5,22 +5,18 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.wma.tools.R;
 import com.wma.tools.databinding.FragmentNewsBinding;
 import com.wma.tools.model.IAllApi;
 import com.wma.tools.utils.Common;
-import com.wma.wmalib.base.fragment.BaseFragment;
 import com.wma.wmalib.base.fragment.BaseTabFragment;
 import com.wma.wmalib.http.HttpUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 王明骜 on 19-8-6 下午3:48.
@@ -48,8 +44,8 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
     }
 
     @Override
-    protected void loadData() {
-        super.loadData();
+    protected void lazyLoad() {
+        super.lazyLoad();
         initViews();
     }
 

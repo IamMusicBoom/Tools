@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
-
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.wma.tools.model.weather.view.WindMillView
-    android:id="@+id/img"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:src="@mipmap/error"
-  />
-</android.support.constraint.ConstraintLayout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_view"
+        android:layout_width="match_parent"
+        android:background="@mipmap/welcome"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:background="@color/ban_tou"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+    </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

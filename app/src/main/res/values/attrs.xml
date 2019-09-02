@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MWindMillView">
+        <attr name="Fan_Color" format="color|reference"/>
+        <attr name="Pillar_Color" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleLevelView">
+        <attr name="Level_Color" format="color|reference"/>
+        <attr name="Bg_Color" format="color|reference"/>
+    </declare-styleable>
+
+</resources>
