@@ -14,6 +14,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -77,13 +78,21 @@ public abstract class BaseRecyclerViewAdapter<T, E extends ViewDataBinding> exte
         return items;
     }
 
-    public void switchSelectedState(int position) {
+    public void setChecked(int position) {
         if (selectedItems.get(position, false)) {
             selectedItems.delete(position);
         } else {
             selectedItems.put(position, true);
         }
         notifyItemChanged(position);
+    }
+
+    public void setUnChecked(int position) {
+        if(selectedItems.get(position)){
+            selectedItems.put(position, false);
+            selectedItems.delete(position);
+            notifyItemChanged(position);
+        }
     }
 
 

@@ -190,6 +190,14 @@ public class WeatherAdapter extends RecyclerView.Adapter {
         public WeatherTempHolder(@NonNull View itemView) {
             super(itemView);
             m1TvCity = itemView.findViewById(R.id.tv_city);
+            m1TvCity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onCitySelectListener!=null){
+                        onCitySelectListener.select();
+                    }
+                }
+            });
             m1TvTemp = itemView.findViewById(R.id.tv_temp);
             m1TvWid = itemView.findViewById(R.id.tv_wid);
             m1ImgWid = itemView.findViewById(R.id.img_wid);
@@ -235,6 +243,16 @@ public class WeatherAdapter extends RecyclerView.Adapter {
             m4ImgNight = itemView.findViewById(R.id.img_light);
             m4ImgDay = itemView.findViewById(R.id.img_day);
         }
+    }
+
+
+    public void setOnCitySelectListener(CitySelectListener onCitySelectListener) {
+        this.onCitySelectListener = onCitySelectListener;
+    }
+
+    CitySelectListener onCitySelectListener;
+    public interface CitySelectListener{
+        void select();
     }
 
 }

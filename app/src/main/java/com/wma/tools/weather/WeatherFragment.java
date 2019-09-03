@@ -1,7 +1,6 @@
 package com.wma.tools.weather;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,7 +16,6 @@ import com.wma.tools.utils.SPUtils;
 import com.wma.wmalib.base.fragment.BaseFragment;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.common.LogUtils;
-import com.wma.wmalib.common.WCommon;
 import com.wma.wmalib.http.HttpUtils;
 
 import java.lang.ref.WeakReference;
@@ -30,7 +28,7 @@ import java.util.List;
 public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
     private final String TAG = this.getClass().getSimpleName();
     List<String> mDetailList = new ArrayList<>();
-    List<WeatherModel.ResultBean.FutureBean> mFeatures = null;
+    List<WeatherModel.ResultBean.FutureBean> mFeatures = new ArrayList<>();
     WeakReference<FragmentWeatherBinding> mWeakBinding;
 
     private WeatherAdapter mAdapter;
@@ -50,14 +48,33 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         mWeakBinding.get().swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getData();
+                getData("");
             }
         });
     }
 
-    private void getData() {
+    private void showDistDialog() {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "");
+        CitySelectDialog citySelectDialog = CitySelectDialog.newInstance(bundle);
+        citySelectDialog.show(getChildFragmentManager(), "a");
+        citySelectDialog.setOnRefreshWeather(new CitySelectDialog.RefreshWeather() {
+            @Override
+            public void onRefresh(String name) {
+                getData(name);
+            }
+        });
+    }
+
+
+    private void getData(String name) {
         HttpUtils.httpUtils.init(IAllApi.WEATHER_HOST);
-        String curDist = SPUtils.getCurDist();
+        String curDist;
+        if (TextUtils.isEmpty(name)) {
+            curDist = SPUtils.getCurDist();
+        } else {
+            curDist = name;
+        }
         new WeatherModel().getDatas(curDist, new HttpCallBack<WeatherModel>() {
             @Override
             public void onBegin() {
@@ -72,20 +89,22 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
             @Override
             public void onSuccess(WeatherModel weatherModel) {
                 WeatherModel.ResultBean result = weatherModel.getResult();
+                mDetailList.clear();
+                mFeatures.clear();
                 String city = Common.CITY + ":" + (TextUtils.isEmpty(result.getCity()) ? "null" : result.getCity());
                 mDetailList.add(city);
                 WeatherModel.ResultBean.RealtimeBean realtime = result.getRealtime();
 
-                String aqi = Common.AIQ + ":" +  (TextUtils.isEmpty(realtime.getAqi()) ? "null" : realtime.getAqi());
+                String aqi = Common.AIQ + ":" + (TextUtils.isEmpty(realtime.getAqi()) ? "null" : realtime.getAqi());
                 mDetailList.add(aqi);
 
-                String direct = Common.DIRECT + ":" +  (TextUtils.isEmpty(realtime.getDirect()) ? "null" : realtime.getDirect());
+                String direct = Common.DIRECT + ":" + (TextUtils.isEmpty(realtime.getDirect()) ? "null" : realtime.getDirect());
                 mDetailList.add(direct);
 
-                String humidity = Common.HUMIDITY + ":" +  (TextUtils.isEmpty(realtime.getHumidity()) ? "null" : realtime.getHumidity());
+                String humidity = Common.HUMIDITY + ":" + (TextUtils.isEmpty(realtime.getHumidity()) ? "null" : realtime.getHumidity());
                 mDetailList.add(humidity);
 
-                String info = Common.INFO + ":" +  (TextUtils.isEmpty(realtime.getInfo()) ? "null" : realtime.getInfo());
+                String info = Common.INFO + ":" + (TextUtils.isEmpty(realtime.getInfo()) ? "null" : realtime.getInfo());
                 mDetailList.add(info);
 
                 String power = Common.POWER + ":" + (TextUtils.isEmpty(realtime.getPower()) ? "null" : realtime.getPower());
@@ -94,9 +113,9 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
                 String temperature = Common.TEMPERATURE + ":" + (TextUtils.isEmpty(realtime.getTemperature()) ? "null" : realtime.getTemperature());
                 mDetailList.add(temperature);
 
-                String wid = Common.WID + ":" +  (TextUtils.isEmpty(realtime.getWid()) ? "null" : realtime.getWid());
+                String wid = Common.WID + ":" + (TextUtils.isEmpty(realtime.getWid()) ? "null" : realtime.getWid());
                 mDetailList.add(wid);
-                mFeatures = result.getFuture();
+                mFeatures.addAll(result.getFuture());
                 initData(realtime);
             }
 
@@ -116,54 +135,55 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
 
     private void initData(WeatherModel.ResultBean.RealtimeBean realtime) {
         String wid = realtime.getWid();
-        if(!TextUtils.isEmpty(wid)){
+        if (!TextUtils.isEmpty(wid)) {
             Integer integer = Integer.valueOf(wid);
-            if(integer == 0){
+            if (integer == 0) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.sunny);
-            }else if(integer == 1 || integer == 2){
+            } else if (integer == 1 || integer == 2) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.cloudy);
-            }else if(integer >=3 && integer<=12){
+            } else if (integer >= 3 && integer <= 12) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.rain);
-            }else if(integer >=13 && integer<=17){
+            } else if (integer >= 13 && integer <= 17) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.snow);
-            }else if(integer == 18){
+            } else if (integer == 18) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.fog);
-            }else if(integer == 19){
+            } else if (integer == 19) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.rain);
-            }else if(integer == 20){
+            } else if (integer == 20) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.sand);
-            }else if(integer >=21 && integer<=25){
+            } else if (integer >= 21 && integer <= 25) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.rain);
-            }else if(integer >=26 && integer<=28){
+            } else if (integer >= 26 && integer <= 28) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.snow);
-            }else if(integer >=29 && integer<=31){
+            } else if (integer >= 29 && integer <= 31) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.sand);
-            }else if (integer == 53){
+            } else if (integer == 53) {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.smog);
-            }else{
+            } else {
                 mWeakBinding.get().swipeView.setBackgroundResource(R.mipmap.welcome);
             }
         }
 
-        if (mAdapter == null) {
-            mAdapter = new WeatherAdapter(mDetailList, mFeatures);
-            mWeakBinding.get().recyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.clear();
-            mAdapter.addList(mDetailList, mFeatures);
-        }
+        mAdapter = new WeatherAdapter(mDetailList, mFeatures);
+        mWeakBinding.get().recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnCitySelectListener(new WeatherAdapter.CitySelectListener() {
+            @Override
+            public void select() {
+                showDistDialog();
+            }
+        });
 
     }
 
     @Override
     protected void lazyLoad() {
-        getData();
+        getData("");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(mAdapter!= null){
+        if (mAdapter != null) {
             mAdapter.clear();
             mAdapter = null;
         }

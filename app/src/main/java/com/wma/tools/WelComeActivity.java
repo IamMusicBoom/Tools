@@ -190,7 +190,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
                         if (j == result.size() - 1) {
                             CityModel model = new CityModel();
                             model.setResult(list);
-                            FileUtils.write(mContext, province, new Gson().toJson(model));
+                            FileUtils.write(mContext, "P_"+province, new Gson().toJson(model));
                         }
 
                     }

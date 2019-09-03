@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="10dp"
+    android:textSize="15sp"
+    android:clickable="false"
+    android:button="@null"
+    android:background="@drawable/bg_province_list"
+    android:hint="文字"
+    android:textColor="@color/province_color_text">
+</CheckBox>
+</layout>
