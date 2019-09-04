@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -107,35 +108,39 @@ public class CitySelectDialog extends DialogFragment {
         showDist();
 
 
-
     }
 
     private void showDist() {
         mDists.clear();
-        String read = FileUtils.read(getContext(), mProvinces.get(mCurProvincePos).getName());
+        String read = FileUtils.read(getContext(), "P_"+mProvinces.get(mCurProvincePos).getName());
         Model model = new Gson().fromJson(read, Model.class);
         List<Model.ResultBean> result = model.getResult();
         for (int i = 0; i < result.size(); i++) {
             Model.ResultBean resultBean = result.get(i);
             String district = resultBean.getDistrict();
-            mDists.add(new ProvinceModel(district,false));
+            if (SPUtils.getCurCity().contains(resultBean.getCity())) {
+                mDists.add(new ProvinceModel(district, false));
+            }
         }
-        if(mDistAdapter == null){
+        if (mDistAdapter == null) {
             mDistAdapter = new MyAdapter();
-        }else{
+        } else {
             mDistAdapter.clearItems();
         }
         mDistAdapter.clearSelectedState();
-        mCurDistPos = getCurPosition(SPUtils.getCurDist(),mDists);
-        initData(mDistView,mDistAdapter,mCurDistPos,mDists);
+        mCurDistPos = getCurPosition(SPUtils.getCurDist(), mDists);
+        initData(mDistView, mDistAdapter, mCurDistPos, mDists);
         mDistAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<ProvinceModel>() {
             @Override
             public void onItemClick(View covertView, int position, ProvinceModel data) {
-                mDistAdapter.setUnChecked(mCurDistPos);
+                if(mCurDistPos != -1){
+                    mDistAdapter.setUnChecked(mCurDistPos);
+                }
                 mCurDistPos = position;
                 mDistAdapter.setChecked(mCurDistPos);
                 SPUtils.setCurDist(data.getName());
-                if(onRefreshWeather!=null){
+                dismiss();
+                if (onRefreshWeather != null) {
                     onRefreshWeather.onRefresh(data.getName());
                 }
             }
@@ -144,7 +149,7 @@ public class CitySelectDialog extends DialogFragment {
 
     private void showCity() {
         mCities.clear();
-        String read = FileUtils.read(getContext(), mProvinces.get(mCurProvincePos).getName());
+        String read = FileUtils.read(getContext(), "P_"+mProvinces.get(mCurProvincePos).getName());
         Model model = new Gson().fromJson(read, Model.class);
         List<Model.ResultBean> result = model.getResult();
         HashSet<String> set = new HashSet<>();
@@ -154,21 +159,23 @@ public class CitySelectDialog extends DialogFragment {
         Object[] objects = set.toArray();
         for (int i = 0; i < objects.length; i++) {
             String cityName = (String) objects[i];
-            mCities.add(new ProvinceModel(cityName,false));
+            mCities.add(new ProvinceModel(cityName, false));
 
         }
-        if(mCityAdapter == null){
+        if (mCityAdapter == null) {
             mCityAdapter = new MyAdapter();
-        }else{
+        } else {
             mCityAdapter.clearItems();
         }
         mCityAdapter.clearSelectedState();
-        mCurCityPos = getCurPosition(SPUtils.getCurCity(),mCities);
-        initData(mCityView,mCityAdapter,mCurCityPos,mCities);
+        mCurCityPos = getCurPosition(SPUtils.getCurCity(), mCities);
+        initData(mCityView, mCityAdapter, mCurCityPos, mCities);
         mCityAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<ProvinceModel>() {
             @Override
             public void onItemClick(View covertView, int position, ProvinceModel data) {
-                mCityAdapter.setUnChecked(mCurCityPos);
+                if(mCurCityPos != -1){
+                    mCityAdapter.setUnChecked(mCurCityPos);
+                }
                 mCurCityPos = position;
                 mCityAdapter.setChecked(mCurCityPos);
                 SPUtils.setCurCity(data.getName());
@@ -183,24 +190,26 @@ public class CitySelectDialog extends DialogFragment {
         String[] list = filesDir.list();
         for (int i = 0; i < list.length; i++) {
             if (list[i].startsWith("P_")) {
-                mProvinces.add(new ProvinceModel(list[i], false));
+                mProvinces.add(new ProvinceModel(list[i].substring(2, list[i].length()), false));
             }
         }
-        if(mProvinceAdapter == null){
+        if (mProvinceAdapter == null) {
             mProvinceAdapter = new MyAdapter();
-        }else{
+        } else {
             mProvinceAdapter.clearItems();
         }
         mProvinceAdapter.clearSelectedState();
-        mCurProvincePos = getCurPosition(SPUtils.getCurProvince(),mProvinces);
-        initData(mProvinceView,mProvinceAdapter,mCurProvincePos,mProvinces);
+        mCurProvincePos = getCurPosition(SPUtils.getCurProvince(), mProvinces);
+        initData(mProvinceView, mProvinceAdapter, mCurProvincePos, mProvinces);
         mProvinceAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<ProvinceModel>() {
             @Override
             public void onItemClick(View covertView, int position, ProvinceModel data) {
-                mProvinceAdapter.setUnChecked(mCurProvincePos);
+                if(mCurProvincePos != -1){
+                    mProvinceAdapter.setUnChecked(mCurProvincePos);
+                }
                 mCurProvincePos = position;
                 mProvinceAdapter.setChecked(mCurProvincePos);
-                SPUtils.setCurProvince(data.getName().substring(2,data.getName().length()));
+                SPUtils.setCurProvince(data.getName());
                 clearData();
                 showCity();
             }
@@ -233,25 +242,28 @@ public class CitySelectDialog extends DialogFragment {
 
         @Override
         protected void bindData(final ItemProvinceBinding binding, final ProvinceModel item, final int position) {
-            if (item.getName().startsWith("P_")) {
-                binding.tvItem.setText(item.getName().substring(2, item.getName().length()));
-            } else {
-                binding.tvItem.setText(item.getName());
-            }
+            binding.tvItem.setText(item.getName());
             binding.tvItem.setChecked(isSelected(position));
         }
     }
 
-    void initData(RecyclerView recyclerView,MyAdapter adapter,int curPos,List<ProvinceModel> list){
+    void initData(RecyclerView recyclerView, MyAdapter adapter, int curPos, List<ProvinceModel> list) {
         recyclerView.setAdapter(adapter);
         adapter.addItems(list);
+        if(curPos == -1){
+            return;
+        }
         recyclerView.scrollToPosition(curPos);
         adapter.setChecked(curPos);
     }
 
-    int getCurPosition(String name, List<ProvinceModel> list){
+    int getCurPosition(String name, List<ProvinceModel> list) {
+        if(TextUtils.isEmpty(name)){
+            show(getFragmentManager(),"a");
+            return -1;
+        }
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().contains(name)){
+            if (name.contains(list.get(i).getName())) {
                 return i;
             }
         }
@@ -265,7 +277,9 @@ public class CitySelectDialog extends DialogFragment {
     }
 
     RefreshWeather onRefreshWeather;
-    public interface RefreshWeather{
+
+    public interface RefreshWeather {
         void onRefresh(String name);
     }
 }
+

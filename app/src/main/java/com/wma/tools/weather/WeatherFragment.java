@@ -1,5 +1,9 @@
 package com.wma.tools.weather;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -7,6 +11,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.wma.tools.R;
+import com.wma.tools.ToolApplication;
 import com.wma.tools.databinding.FragmentWeatherBinding;
 import com.wma.tools.model.IAllApi;
 import com.wma.tools.model.weather.WeatherAdapter;
@@ -30,7 +35,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
     List<String> mDetailList = new ArrayList<>();
     List<WeatherModel.ResultBean.FutureBean> mFeatures = new ArrayList<>();
     WeakReference<FragmentWeatherBinding> mWeakBinding;
-
+    MyLocateReceiver receiver;
     private WeatherAdapter mAdapter;
 
     @Override
@@ -51,6 +56,10 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
                 getData("");
             }
         });
+        receiver = new MyLocateReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ToolApplication.getInstance().getPackageName()+"locateSuccess");
+        getActivity().registerReceiver(receiver,intentFilter);
     }
 
     private void showDistDialog() {
@@ -186,6 +195,16 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         if (mAdapter != null) {
             mAdapter.clear();
             mAdapter = null;
+        }
+        getActivity().unregisterReceiver(receiver);
+    }
+
+
+    class MyLocateReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getData(SPUtils.getCurDist());
         }
     }
 }

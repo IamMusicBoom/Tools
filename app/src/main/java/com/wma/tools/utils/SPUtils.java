@@ -51,7 +51,7 @@ public class SPUtils {
         edit.apply();
     }
     public static String getCurCity(){
-        String city = sp.getString(CUR_CITY, "成都");
+        String city = sp.getString(CUR_CITY, "");
         return city;
     }
 
@@ -62,7 +62,7 @@ public class SPUtils {
     }
 
     public static String getCurDist(){
-        String dist = sp.getString(CUR_DIST, "双流");
+        String dist = sp.getString(CUR_DIST, "");
         return dist;
     }
 
@@ -72,7 +72,7 @@ public class SPUtils {
         edit.apply();
     }
     public static String getCurProvince(){
-        String province = sp.getString(CUR_PROVINCE, "四川");
+        String province = sp.getString(CUR_PROVINCE, "");
         return province;
     }
     //================== 天气模块 ==================

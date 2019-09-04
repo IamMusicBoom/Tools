@@ -58,6 +58,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="15dp"
-
          />
+    <ImageView
+        android:id="@+id/img_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/ic_locate"
+        app:layout_constraintStart_toEndOf="@id/tv_city"
+        app:layout_constraintTop_toTopOf="@id/tv_city"
+        app:layout_constraintBottom_toBottomOf="@id/tv_city"
+        />
 </android.support.constraint.ConstraintLayout>

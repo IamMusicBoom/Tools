@@ -14,6 +14,8 @@ import com.wma.tools.R;
 import com.wma.tools.model.weather.view.CircleLevelView;
 import com.wma.tools.model.weather.view.MWindMillView;
 import com.wma.tools.utils.Common;
+import com.wma.tools.utils.LocateTools;
+import com.wma.wmalib.utils.LocationUtils;
 
 import java.util.List;
 
@@ -184,7 +186,7 @@ public class WeatherAdapter extends RecyclerView.Adapter {
 
     class WeatherTempHolder extends RecyclerView.ViewHolder {
         TextView m1TvCity, m1TvTemp, m1TvWid;
-        ImageView m1ImgWid;
+        ImageView m1ImgWid,m1ImgLocate;
 
 
         public WeatherTempHolder(@NonNull View itemView) {
@@ -201,6 +203,14 @@ public class WeatherAdapter extends RecyclerView.Adapter {
             m1TvTemp = itemView.findViewById(R.id.tv_temp);
             m1TvWid = itemView.findViewById(R.id.tv_wid);
             m1ImgWid = itemView.findViewById(R.id.img_wid);
+            m1ImgLocate = itemView.findViewById(R.id.img_locate);
+            m1ImgLocate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("WMA-WMA", "onClick: ");
+                    LocateTools.startLocate();
+                }
+            });
         }
     }
 
