@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.widget.EditText;
 
 import com.wma.tools.ToolApplication;
+import com.wma.tools.model.weather.view.LocatingView;
 import com.wma.wmalib.pulltorefresh.library.PullToRefreshBase;
 
 /**
@@ -17,6 +18,12 @@ public class SPUtils {
     private static String CUR_CITY = "cur_city";
     private static String CUR_DIST = "cur_dist";
     private static String CUR_PROVINCE = "cur_province";
+
+
+    private static String IS_LOAD_PIN_YIN = "is_load_pin_yin";
+
+    private static String LOCATE_STATE = "locate_state";
+
 
     private static Context mContext = ToolApplication.getInstance();
 
@@ -75,5 +82,35 @@ public class SPUtils {
         String province = sp.getString(CUR_PROVINCE, "");
         return province;
     }
+
+
+    public static int getLocateState(){
+        int anInt = sp.getInt(LOCATE_STATE, LocatingView.UNLOCATE);
+        return anInt;
+    }
+
+    public static void setLocateState(int locateState){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putInt(LOCATE_STATE,locateState);
+        edit.apply();
+    }
+
+
     //================== 天气模块 ==================
+
+
+
+
+    //================== 字典模块 ==================
+
+    public static boolean isLoadPinYin(){
+        return sp.getBoolean(IS_LOAD_PIN_YIN,false);
+    }
+    public static void setIsLoadPinYin(boolean isLoadPinYin){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putBoolean(IS_LOAD_PIN_YIN,isLoadPinYin);
+        edit.apply();
+    }
+
+
 }

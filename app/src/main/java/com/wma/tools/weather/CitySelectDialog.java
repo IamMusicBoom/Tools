@@ -100,6 +100,10 @@ public class CitySelectDialog extends DialogFragment {
         //省份
         showProvince();
 
+
+        if(mCurProvincePos == -1){
+            return;
+        }
         //城市
         showCity();
 
@@ -218,9 +222,13 @@ public class CitySelectDialog extends DialogFragment {
 
     private void clearData() {
         mCities.clear();
-        mCityAdapter.clearItems();
+        if(mCityAdapter != null){
+            mCityAdapter.clearItems();
+        }
         mDists.clear();
-        mDistAdapter.clearItems();
+        if(mDistAdapter != null){
+            mDistAdapter.clearItems();
+        }
     }
 
     public static CitySelectDialog newInstance(Bundle bundle) {
@@ -259,7 +267,6 @@ public class CitySelectDialog extends DialogFragment {
 
     int getCurPosition(String name, List<ProvinceModel> list) {
         if(TextUtils.isEmpty(name)){
-            show(getFragmentManager(),"a");
             return -1;
         }
         for (int i = 0; i < list.size(); i++) {
@@ -280,6 +287,24 @@ public class CitySelectDialog extends DialogFragment {
 
     public interface RefreshWeather {
         void onRefresh(String name);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mDistAdapter = null;
+        mCityAdapter = null;
+        mProvinceAdapter = null;
+
+        mProvinceView = null;
+        mCityView = null;
+        mDistView = null;
+
+        mProvinces = null;
+        mCities = null;
+        mDists = null;
+
+        onRefreshWeather = null;
     }
 }
 

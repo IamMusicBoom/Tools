@@ -67,14 +67,12 @@ public abstract class BaseWebViewActivity extends BaseActivity<ActivityWebviewBi
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                Log.d("WMA-WMA", "onPageStarted: ");
                 _loadSuccess = true;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.d("WMA-WMA", "onPageFinished: ");
                 if(_loadSuccess){
                 }else{
                     if (mEmptyView.getVisibility() == View.GONE) {
@@ -89,7 +87,6 @@ public abstract class BaseWebViewActivity extends BaseActivity<ActivityWebviewBi
             public void onReceivedError(WebView view, int errorCode,
                                         String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
-                Log.d("WMA-WMA", "onReceivedError: ");
                 _loadSuccess = false;
             }
         });

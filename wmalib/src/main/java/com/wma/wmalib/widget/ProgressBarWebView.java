@@ -40,7 +40,6 @@ public class ProgressBarWebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
 
-            Log.d("WMA-WMA", "onProgressChanged: " + newProgress);
             if (newProgress == 100) {
                 progressbar.setVisibility(GONE);
             } else {

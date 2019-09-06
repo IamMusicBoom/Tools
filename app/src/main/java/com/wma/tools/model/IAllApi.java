@@ -1,5 +1,6 @@
 package com.wma.tools.model;
 
+import com.wma.tools.model.horoscope.PinYinModel;
 import com.wma.tools.model.news.NewsModel;
 import com.wma.tools.model.weather.CityModel;
 import com.wma.tools.model.weather.WeatherModel;
@@ -53,4 +54,9 @@ public interface IAllApi {
      */
     @GET("cityList")
     Observable<CityModel> getCities(@Query("key") String key);
+
+
+    static String DICTIONARY_HOST = NEWS_HOST;
+    @GET("xhzd/pinyin")
+    Observable<PinYinModel> getPinYin(@Query("key") String key);
 }

@@ -1,5 +1,7 @@
 package com.wma.tools.model.weather;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,11 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wma.tools.R;
+import com.wma.tools.ToolApplication;
+import com.wma.tools.WelComeActivity;
 import com.wma.tools.model.weather.view.CircleLevelView;
+import com.wma.tools.model.weather.view.LocatingView;
 import com.wma.tools.model.weather.view.MWindMillView;
 import com.wma.tools.utils.Common;
-import com.wma.tools.utils.LocateTools;
-import com.wma.wmalib.utils.LocationUtils;
+import com.wma.tools.utils.SPUtils;
 
 import java.util.List;
 
@@ -142,7 +146,7 @@ public class WeatherAdapter extends RecyclerView.Adapter {
                         ((WeatherFutureHolder) viewHolder).m4ImgDay.setVisibility(View.INVISIBLE);
                         ((WeatherFutureHolder) viewHolder).m4ImgArrow.setVisibility(View.VISIBLE);
                         ((WeatherFutureHolder) viewHolder).m4ImgArrow.setImageResource(Common.WID_IMG_MAP.get(day));
-                    }else{
+                    } else {
                         ((WeatherFutureHolder) viewHolder).m4ImgNight.setVisibility(View.VISIBLE);
                         ((WeatherFutureHolder) viewHolder).m4ImgDay.setVisibility(View.VISIBLE);
                         ((WeatherFutureHolder) viewHolder).m4ImgArrow.setVisibility(View.VISIBLE);
@@ -186,7 +190,8 @@ public class WeatherAdapter extends RecyclerView.Adapter {
 
     class WeatherTempHolder extends RecyclerView.ViewHolder {
         TextView m1TvCity, m1TvTemp, m1TvWid;
-        ImageView m1ImgWid,m1ImgLocate;
+        ImageView m1ImgWid;
+        LocatingView m1ImgLocate;
 
 
         public WeatherTempHolder(@NonNull View itemView) {
@@ -195,7 +200,7 @@ public class WeatherAdapter extends RecyclerView.Adapter {
             m1TvCity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(onCitySelectListener!=null){
+                    if (onCitySelectListener != null) {
                         onCitySelectListener.select();
                     }
                 }
@@ -204,11 +209,13 @@ public class WeatherAdapter extends RecyclerView.Adapter {
             m1TvWid = itemView.findViewById(R.id.tv_wid);
             m1ImgWid = itemView.findViewById(R.id.img_wid);
             m1ImgLocate = itemView.findViewById(R.id.img_locate);
+            Log.d("WMA-WMA", "WeatherTempHolder: SPUtils.getLocateState() = " + SPUtils.getLocateState());
+            m1ImgLocate.setCurState(SPUtils.getLocateState());
             m1ImgLocate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("WMA-WMA", "onClick: ");
-                    LocateTools.startLocate();
+                    m1ImgLocate.setCurState(LocatingView.LOCATING);
+                   ToolApplication.getInstance().startService(new Intent(ToolApplication.getInstance(),LocateService.class));
                 }
             });
         }
@@ -261,7 +268,8 @@ public class WeatherAdapter extends RecyclerView.Adapter {
     }
 
     CitySelectListener onCitySelectListener;
-    public interface CitySelectListener{
+
+    public interface CitySelectListener {
         void select();
     }
 

@@ -15,6 +15,7 @@ import com.wma.tools.databinding.ItemNewsBinding;
 import com.wma.tools.model.news.NewsModel;
 import com.wma.wmalib.base.adapter.BaseRecyclerViewAdapter;
 import com.wma.wmalib.base.fragment.BaseListFragment;
+import com.wma.wmalib.base.fragment.BaseRefreshListFragment;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.common.LogUtils;
 import com.wma.wmalib.glide.GlideUtil;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by 王明骜 on 19-8-9 下午2:12.
  */
-public class NewsListFragment extends BaseListFragment<NewsModel.ResultBean.DataBean, ItemNewsBinding, FragmentNewsListBinding> {
+public class NewsListFragment extends BaseRefreshListFragment<NewsModel.ResultBean.DataBean, ItemNewsBinding, FragmentNewsListBinding> {
     WeakReference<FragmentNewsListBinding> mWeakBinding;
     String key = "";
 

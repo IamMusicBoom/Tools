@@ -1,12 +1,8 @@
 package com.wma.wmalib.base.fragment;
 
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.wma.wmalib.base.GridSpaceItemDecoration;
@@ -19,19 +15,14 @@ import com.wma.wmalib.pulltorefresh.library.PullToRefreshRecyclerView;
 import java.util.List;
 
 /**
- * Created by 王明骜 on 19-8-9 下午2:13.
- *
- * E 是 itemView 的 binding
- * H 是 Fragment 布局的 binding
+ * Created by 王明骜 on 19-9-4 下午4:58.
  */
-
-
-public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends ViewDataBinding> extends BaseFragment<H> {
+public abstract class BaseRefreshListFragment<T,E extends ViewDataBinding,H extends ViewDataBinding> extends BaseFragment<H> implements PullToRefreshBase.OnRefreshListener2 {
 
 
     protected int mPage = 1;
-//    protected int mTotal = 0;//必须要设置
-    protected RecyclerView mRecyclerView;
+    //    protected int mTotal = 0;//必须要设置
+    protected PullToRefreshRecyclerView mRecyclerView;
     public BaseIViewDataRecyclerAdapter mAdapter;
     protected View mEmptyView;
 //    public boolean only_from_start;
@@ -46,8 +37,6 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
 //            only_from_start = true;
 //        }
 //    }
-
-
 
     public void handleData(List<T> _data) {
         if (mAdapter == null) {
@@ -65,7 +54,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
             showEmptyView(false);
             mAdapter.addItems(_data);
         }
-//        mRecyclerView.onRefreshComplete();
+        mRecyclerView.onRefreshComplete();
 //        if (!only_from_start) {
 //            if (mTotal <= mAdapter.getData().size())
 //                mRecyclerView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
@@ -93,18 +82,18 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
 
 
     public void setGridLayout(int span, int spacingInPixels) {
-        mRecyclerView.addItemDecoration(new GridSpaceItemDecoration(span, spacingInPixels, false));
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), span, 1, false));
+        mRecyclerView.getRefreshableView().addItemDecoration(new GridSpaceItemDecoration(span, spacingInPixels, false));
+        mRecyclerView.getRefreshableView().setLayoutManager(new GridLayoutManager(getActivity(), span, 1, false));
     }
 
     public void setLinearLayout(int orientation, int spacingInPixels) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mRecyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getActivity(), orientation, false));
+        mRecyclerView.getRefreshableView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
     }
 
 
     protected int spacingInPixels() {
-        return 20;
+        return 0;
     }
 
     protected int orientation() {
@@ -169,19 +158,32 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
                 }
             });
         }
+        if (mRecyclerView != null) {
+            mRecyclerView.setOnRefreshListener(this);
+        }
 
         if (mRecyclerView != null) {
             if (style() == WCommon.LINEAR) {
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-//                mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
+                mRecyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
+                mRecyclerView.getRefreshableView().addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
             } else {
-                mRecyclerView.addItemDecoration(new GridSpaceItemDecoration(span(), spacingInPixels(), false));
-                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), false));
+                mRecyclerView.getRefreshableView().addItemDecoration(new GridSpaceItemDecoration(span(), spacingInPixels(), false));
+                mRecyclerView.getRefreshableView().setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), false));
             }
         }
     }
 
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        mPage = 1;
+        getListData();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
+        getListData();
+    }
 
     public abstract void getListData();
 
@@ -201,6 +203,5 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
             bindItemData(e, info, position);
         }
     }
-
 
 }

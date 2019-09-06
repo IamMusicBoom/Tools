@@ -5,11 +5,10 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
+<android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="星座"
-    android:gravity="center"
-    android:textSize="50sp"/>
+    android:layout_height="match_parent">
+</android.support.v7.widget.RecyclerView>
+    <include layout="@layout/view_empty" />
 </android.support.constraint.ConstraintLayout>
 </layout>

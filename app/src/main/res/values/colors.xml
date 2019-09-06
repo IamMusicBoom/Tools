@@ -21,6 +21,8 @@
     
     <color name="ban_tou">#99000000</color>
 
+    <color name="fail_red">#FD4046</color>
+    <color name="success_green">#92C63D</color>
 
 </resources>
 

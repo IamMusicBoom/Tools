@@ -4,43 +4,32 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.haha.perflib.Main;
 import com.wma.tools.model.IAllApi;
 import com.wma.tools.model.weather.CityModel;
+import com.wma.tools.model.weather.LocateService;
 import com.wma.tools.model.weather.WidsModel;
 import com.wma.tools.utils.Common;
-import com.wma.tools.utils.LocateTools;
 import com.wma.tools.utils.SPUtils;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.http.HttpUtils;
 import com.wma.wmalib.utils.FileUtils;
-import com.wma.wmalib.utils.LocationUtils;
 import com.wma.wmalib.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class WelComeActivity extends Activity implements PermissionUtils.PermissionCallbacks {
 
-    static String TAG = "WMA-WMA";
     static Context mContext = ToolApplication.getInstance();
 
     private static final int GET_DATA = 0;
@@ -85,7 +74,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
             @Override
             public void run() {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -162,12 +151,12 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
 
                 @Override
                 public void onFail(String e) {
-                    Log.d(TAG, "onFail: " + e);
+
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    Log.d(TAG, "onError: " + e);
+
                 }
             });
         }
@@ -216,7 +205,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
         if (!PermissionUtils.hasPermissions(this, permissions)) {
             PermissionUtils.requestPermissions(this, REQUEST_PERMISSION_CODE, permissions);
         } else {
-            LocateTools.startLocate();
+            startService(new Intent(WelComeActivity.this,LocateService.class));
         }
     }
 
@@ -236,7 +225,7 @@ public class WelComeActivity extends Activity implements PermissionUtils.Permiss
     @Override
     public void onPermissionsAllGranted(int requestCode, List<String> perms, boolean isAllGranted) {
         if (isAllGranted) {
-            LocateTools.startLocate();
+            startService(new Intent(WelComeActivity.this,LocateService.class));
         }
     }
 

@@ -29,6 +29,8 @@
         <activity android:name=".news.NewsDetailActivity" />
         <activity android:name=".news.PictureDetailActivity" />
         <activity android:name=".MainActivity"></activity>
+        <service android:name=".model.weather.LocateService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

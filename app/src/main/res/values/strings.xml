@@ -2,7 +2,7 @@
     <string name="app_name">Tools</string>
     <string name="news">新闻</string>
     <string name="weather">天气</string>
-    <string name="horoscope">星座</string>
+    <string name="horoscope">字典</string>
     <string name="me">我的</string>
 
     <string name="viewpager_indicator">%1$d/%2$d</string>

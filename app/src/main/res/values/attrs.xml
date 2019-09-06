@@ -10,4 +10,11 @@
         <attr name="Bg_Color" format="color|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="LocatingView">
+        <attr name="Fail_Color" format="color|reference"/>
+        <attr name="Success_Color" format="color|reference"/>
+        <attr name="Circle_Bg_Color" format="color|reference"/>
+        <attr name="Progress_Color" format="color|reference"/>
+    </declare-styleable>
+
 </resources>

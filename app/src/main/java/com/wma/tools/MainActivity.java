@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.wma.tools.databinding.ActivityMainBinding;
-import com.wma.tools.horoscope.HoroscopeFragment;
+import com.wma.tools.horoscope.DictionaryFragment;
 import com.wma.tools.me.MeFragment;
 import com.wma.tools.news.NewsFragment;
 import com.wma.tools.weather.WeatherFragment;
@@ -25,7 +25,7 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
         List<Fragment> list = new ArrayList<>();
         list.add(new NewsFragment());
         list.add(new WeatherFragment());
-        list.add(new HoroscopeFragment());
+        list.add(new DictionaryFragment());
         list.add(new MeFragment());
         return list;
     }

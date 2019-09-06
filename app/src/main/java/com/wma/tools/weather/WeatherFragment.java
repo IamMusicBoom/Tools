@@ -16,6 +16,7 @@ import com.wma.tools.databinding.FragmentWeatherBinding;
 import com.wma.tools.model.IAllApi;
 import com.wma.tools.model.weather.WeatherAdapter;
 import com.wma.tools.model.weather.WeatherModel;
+import com.wma.tools.model.weather.view.LocatingView;
 import com.wma.tools.utils.Common;
 import com.wma.tools.utils.SPUtils;
 import com.wma.wmalib.base.fragment.BaseFragment;
@@ -38,6 +39,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
     MyLocateReceiver receiver;
     private WeatherAdapter mAdapter;
 
+
     @Override
     protected void createContentView(ViewGroup container, FragmentWeatherBinding binding) {
         mWeakBinding = new WeakReference<>(binding);
@@ -58,7 +60,8 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         });
         receiver = new MyLocateReceiver();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ToolApplication.getInstance().getPackageName()+"locateSuccess");
+        intentFilter.addAction("com.wma.tools.locateSuccess");
+        intentFilter.addAction("com.wma.tools.locateFail");
         getActivity().registerReceiver(receiver,intentFilter);
     }
 
@@ -70,6 +73,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         citySelectDialog.setOnRefreshWeather(new CitySelectDialog.RefreshWeather() {
             @Override
             public void onRefresh(String name) {
+                SPUtils.setLocateState(LocatingView.UNLOCATE);
                 getData(name);
             }
         });
@@ -83,6 +87,10 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
             curDist = SPUtils.getCurDist();
         } else {
             curDist = name;
+        }
+        if(TextUtils.isEmpty(curDist)){
+            showDistDialog();
+            return;
         }
         new WeatherModel().getDatas(curDist, new HttpCallBack<WeatherModel>() {
             @Override
@@ -174,6 +182,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         }
 
         mAdapter = new WeatherAdapter(mDetailList, mFeatures);
+        mWeakBinding.get().recyclerView.setItemViewCacheSize(-1);
         mWeakBinding.get().recyclerView.setAdapter(mAdapter);
         mAdapter.setOnCitySelectListener(new WeatherAdapter.CitySelectListener() {
             @Override
@@ -204,7 +213,14 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            getData(SPUtils.getCurDist());
+            String action = intent.getAction();
+            Log.d("WMA-WMA", "onReceive: action = "+ action + "  " + mAdapter);
+            if(action.equals("com.wma.tools.locateSuccess")){
+
+            }else if (action.equals("com.wma.tools.locateFail")){
+                getData(SPUtils.getCurDist());
+                showDistDialog();
+            }
         }
     }
 }

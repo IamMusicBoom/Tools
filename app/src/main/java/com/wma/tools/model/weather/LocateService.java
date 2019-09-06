@@ -1,5 +1,7 @@
-package com.wma.tools.utils;
+package com.wma.tools.model.weather;
 
+import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -8,36 +10,44 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.wma.tools.ToolApplication;
-import com.wma.wmalib.utils.DataStoreUtils;
+import com.wma.tools.model.weather.view.LocatingView;
+import com.wma.tools.utils.SPUtils;
+import com.wma.tools.utils.Utils;
 import com.wma.wmalib.utils.LocationUtils;
 
-
 /**
- * Created by 王明骜 on 19-9-4 下午2:40.
+ * Created by 王明骜 on 19-9-5 上午10:09.
  */
-public class LocateTools {
-    static LocationManager mLocationManager;
+public class LocateService extends Service {
+    LocationManager mLocationManager;
+
 
     /**
      * 开始定位
      */
-    public static void startLocate() {
-
-        mLocationManager = (LocationManager) ToolApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
-        boolean providerEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    public void startLocate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mLocationManager = (LocationManager) ToolApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
+                boolean providerEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 //        Log.d(TAG, "startLocate: providerEnabled = " + providerEnabled);
-        if (providerEnabled) { //GPS已开启
+                if (providerEnabled) { //GPS已开启
 
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_FINE);//高精度
-            criteria.setAltitudeRequired(false);//无海拔要求   criteria.setBearingRequired(false);//无方位要求
-            criteria.setCostAllowed(true);//允许产生资费
-            criteria.setPowerRequirement(Criteria.POWER_LOW);//低功耗
+                    Criteria criteria = new Criteria();
+                    criteria.setAccuracy(Criteria.ACCURACY_FINE);//高精度
+                    criteria.setAltitudeRequired(false);//无海拔要求   criteria.setBearingRequired(false);//无方位要求
+                    criteria.setCostAllowed(true);//允许产生资费
+                    criteria.setPowerRequirement(Criteria.POWER_LOW);//低功耗
 
 //            criteria.setAccuracy(Criteria.ACCURACY_FINE);
 //            //设置定位精准度
@@ -60,40 +70,54 @@ public class LocateTools {
 //            criteria.setVerticalAccuracy(Criteria.ACCURACY_HIGH);
 //            //设置垂直方向精确度
 
-            // 获取最佳服务对象
-            String provider = mLocationManager.getBestProvider(criteria, true);
-            /**
-             * 绑定监听
-             * 参数1，设备：有GPS_PROVIDER和NETWORK_PROVIDER两种，前者是GPS,后者是GPRS以及WIFI定位
-             * 参数2，位置信息更新周期.单位是毫秒
-             * 参数3，位置变化最小距离：当位置距离变化超过此值时，将更新位置信息
-             * 参数4，监听
-             * 备注：参数2和3，如果参数3不为0，则以参数3为准；参数3为0，则通过时间来定时更新；两者为0，则随时刷新
-             */
-            //TODO 设定为固定的网络定位
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        } else {
-            Toast.makeText(ToolApplication.getInstance(), "请打开GPS", Toast.LENGTH_SHORT).show();
-        }
+                    // 获取最佳服务对象
+                    String provider = mLocationManager.getBestProvider(criteria, true);
+                    /**
+                     * 绑定监听
+                     * 参数1，设备：有GPS_PROVIDER和NETWORK_PROVIDER两种，前者是GPS,后者是GPRS以及WIFI定位
+                     * 参数2，位置信息更新周期.单位是毫秒
+                     * 参数3，位置变化最小距离：当位置距离变化超过此值时，将更新位置信息
+                     * 参数4，监听
+                     * 备注：参数2和3，如果参数3不为0，则以参数3为准；参数3为0，则通过时间来定时更新；两者为0，则随时刷新
+                     */
+                    //TODO 设定为固定的网络定位
+                    Looper.prepare();
+                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                    Looper.loop();
+                } else {
+                    Looper.prepare();
+                    Toast.makeText(ToolApplication.getInstance(), "请打开GPS", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }
+        }).start();
+
     }
 
 
-    private static LocationListener locationListener = new LocationListener() {
+    private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             String countryName = LocationUtils.getCountryName(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
             String provinceName = LocationUtils.getProvinceName(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
             String cityName = LocationUtils.getCityName(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
             String dist = LocationUtils.getStreet(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
-            if(!TextUtils.isEmpty(countryName) || countryName.equals("unknown") && !TextUtils.isEmpty(provinceName) && !TextUtils.isEmpty(cityName)){
+            Log.d("WMA-WMA", "onLocationChanged: countryName = " + countryName + " provinceName = " + provinceName + " cityName = " + cityName + " dist = " + dist);
+            Log.d("WMA-WMA", "onLocationChanged: " + !TextUtils.isEmpty(countryName));
+            Log.d("WMA-WMA", "onLocationChanged: " + !countryName.equals("unknown"));
+            if (!TextUtils.isEmpty(countryName) && !countryName.equals("unknown")) {
                 String s = Utils.formatProvince(provinceName);
                 SPUtils.setCurProvince(s);
                 SPUtils.setCurCity(Utils.formatCity(cityName));
                 SPUtils.setCurDist(Utils.formatDist(dist));
-                mLocationManager.removeUpdates(locationListener);
-                ToolApplication.getInstance().sendBroadcast(new Intent(ToolApplication.getInstance().getPackageName()+"locateSuccess"));
+                ToolApplication.getInstance().sendBroadcast(new Intent("com.wma.tools.locateSuccess"));
+                SPUtils.setLocateState(LocatingView.LOCATE_SUCCESS);
+            } else {
+                ToolApplication.getInstance().sendBroadcast(new Intent("com.wma.tools.locateFail"));
+                SPUtils.setLocateState(LocatingView.LOCATE_FAIL);
             }
-            Log.d("WMA-WMA", "onLocationChanged: " + SPUtils.getCurProvince() + " " + SPUtils.getCurCity() + " " + SPUtils.getCurDist());
+            mLocationManager.removeUpdates(locationListener);
+            stopSelf();
             //位置信息变化时触发
 //            Log.d(TAG, "定位方式：" + location.getProvider());
 //            Log.d(TAG, "纬度：" + location.getLatitude());
@@ -135,4 +159,16 @@ public class LocateTools {
 //            Log.d(TAG, "onProviderDisabled: ");
         }
     };
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        startLocate();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 }
