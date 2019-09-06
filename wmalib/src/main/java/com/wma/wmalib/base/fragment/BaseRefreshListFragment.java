@@ -39,6 +39,9 @@ public abstract class BaseRefreshListFragment<T,E extends ViewDataBinding,H exte
 //    }
 
     public void handleData(List<T> _data) {
+        if(mRecyclerView==null){
+            return;
+        }
         if (mAdapter == null) {
             mAdapter = new BaseIViewDataRecyclerAdapter();
 //            setLinearLayout();

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by 王明骜 on 19-9-5 上午9:10.
  */
-public abstract class Model extends BaseModel<IAllApi> {
+public abstract class PinYinBaseModel extends BaseModel<IAllApi> {
 
 
     /**

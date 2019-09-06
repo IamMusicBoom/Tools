@@ -2,11 +2,51 @@
 <layout>
 
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/container"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_root"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray">
-
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_0"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:text="输入汉字"
+            android:textColor="@android:color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:transitionName="title"
+            android:gravity="center" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:text="查询部首"
+            android:textColor="@android:color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:transitionName="title"
+            android:gravity="center" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:text="查询拼音"
+            android:textColor="@android:color/black"
+            android:background="?android:attr/selectableItemBackground"
+            android:transitionName="title"
+            android:gravity="center" />
+    </LinearLayout>
 </layout>

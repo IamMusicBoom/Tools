@@ -102,9 +102,6 @@ public class LocateService extends Service {
             String provinceName = LocationUtils.getProvinceName(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
             String cityName = LocationUtils.getCityName(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
             String dist = LocationUtils.getStreet(ToolApplication.getInstance(), location.getLatitude(), location.getLongitude());
-            Log.d("WMA-WMA", "onLocationChanged: countryName = " + countryName + " provinceName = " + provinceName + " cityName = " + cityName + " dist = " + dist);
-            Log.d("WMA-WMA", "onLocationChanged: " + !TextUtils.isEmpty(countryName));
-            Log.d("WMA-WMA", "onLocationChanged: " + !countryName.equals("unknown"));
             if (!TextUtils.isEmpty(countryName) && !countryName.equals("unknown")) {
                 String s = Utils.formatProvince(provinceName);
                 SPUtils.setCurProvince(s);

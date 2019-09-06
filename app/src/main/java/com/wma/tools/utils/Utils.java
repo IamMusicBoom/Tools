@@ -39,6 +39,9 @@ public class Utils {
     public static String formatCity(String name){
         String read = FileUtils.read(mContext, "P_"+SPUtils.getCurProvince());
         Model model = new Gson().fromJson(read, Model.class);
+        if(model == null){
+            return "";
+        }
         List<Model.ResultBean> result = model.getResult();
         for (int i = 0; i < result.size(); i++) {
             Model.ResultBean resultBean = result.get(i);

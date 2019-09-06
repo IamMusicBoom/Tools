@@ -209,7 +209,6 @@ public class WeatherAdapter extends RecyclerView.Adapter {
             m1TvWid = itemView.findViewById(R.id.tv_wid);
             m1ImgWid = itemView.findViewById(R.id.img_wid);
             m1ImgLocate = itemView.findViewById(R.id.img_locate);
-            Log.d("WMA-WMA", "WeatherTempHolder: SPUtils.getLocateState() = " + SPUtils.getLocateState());
             m1ImgLocate.setCurState(SPUtils.getLocateState());
             m1ImgLocate.setOnClickListener(new View.OnClickListener() {
                 @Override

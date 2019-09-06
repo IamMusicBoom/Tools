@@ -21,6 +21,7 @@ public class SPUtils {
 
 
     private static String IS_LOAD_PIN_YIN = "is_load_pin_yin";
+    private static String IS_LOAD_BU_SHOU = "is_load_bu_shou";
 
     private static String LOCATE_STATE = "locate_state";
 
@@ -109,6 +110,15 @@ public class SPUtils {
     public static void setIsLoadPinYin(boolean isLoadPinYin){
         SharedPreferences.Editor edit = sp.edit();
         edit.putBoolean(IS_LOAD_PIN_YIN,isLoadPinYin);
+        edit.apply();
+    }
+
+    public static boolean isLoadBuShou(){
+        return sp.getBoolean(IS_LOAD_BU_SHOU,false);
+    }
+    public static void setIsLoadBuShou(boolean isLoadBuShou){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putBoolean(IS_LOAD_BU_SHOU,isLoadBuShou);
         edit.apply();
     }
 

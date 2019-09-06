@@ -1,11 +1,8 @@
 package com.wma.tools.model.horoscope;
 
 import com.wma.tools.model.IAllApi;
-import com.wma.wmalib.base.BaseModel;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.http.HttpUtils;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -16,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by 王明骜 on 19-9-4 下午4:21.
  */
-public class PinYinModel extends Model {
+public class PinYinModel extends PinYinBaseModel {
 
     /**
      * reason : success
@@ -26,7 +23,7 @@ public class PinYinModel extends Model {
 
     IAllApi iAllApi;
 
-    //http://apis.juhe.cn/simpleWeather/wids?key=795896001e17442acb2ca48ae1ea3167
+    //http://v.juhe.cn/xhzd/pinyin?key=ad57bd1cd8356e243f3e7ae9ad27418f
     @Override
     public IAllApi getModel(Class<IAllApi> classes) {
         if (iAllApi == null) {
