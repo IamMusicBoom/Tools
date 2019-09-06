@@ -50,6 +50,13 @@ public class DictionaryKindActivity extends BaseActivity<ActivityDictionaryKindB
         }
     }
 
+    public void goNext(){
+        
+    }
+    public void beBack(){
+
+    }
+
     @Override
     public int getContentLayoutId() {
         return R.layout.activity_dictionary_kind;

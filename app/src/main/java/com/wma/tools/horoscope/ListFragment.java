@@ -1,6 +1,7 @@
 package com.wma.tools.horoscope;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
     private final String TAG = this.getClass().getSimpleName();
     WeakReference<FragmentPinYinBinding> mWeakBinding;
     DictionaryFragment mParent;
+    List<DataModel> list;
     @Override
     protected void createContentView(ViewGroup container, FragmentPinYinBinding binding) {
         mWeakBinding = new WeakReference<>(binding);
@@ -50,6 +52,12 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
         int position = arguments.getInt("position");
         mParent = (DictionaryFragment) getParentFragment();
         mRecyclerView = (RecyclerView) ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(0);
+        mRecyclerView.addItemDecoration(new CeilingItemDecoration(getActivity(), new CeilingItemDecoration.GroupController() {
+            @Override
+            public String getGroupName(int pos) {
+                return list.get(pos).getKey();
+            }
+        }));
         getData(position);
 
     }
@@ -73,7 +81,6 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
 
     private void getBuShou() {
         if (!SPUtils.isLoadBuShou()) {
-            Log.d("WMA-WMA", "getBuShou: from web");
             new BuShouModel().getDatas(new HttpCallBack<BuShouModel>() {
                 @Override
                 public void onBegin() {
@@ -88,10 +95,10 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                 @Override
                 public void onSuccess(BuShouModel pinYinModel) {
                     List<BuShouModel.ResultBean> result = pinYinModel.getResult();
-                    List<DataModel> list = new ArrayList<>();
+                    list = new ArrayList<>();
                     for (int i = 0; i < result.size(); i++) {
                         BuShouBaseModel.ResultBean resultBean = result.get(i);
-                        list.add(new DataModel(resultBean.getId(),resultBean.getBihua(),resultBean.getBushou()));
+                        list.add(new DataModel(resultBean.getId(),resultBean.getBihua()+" 画",resultBean.getBushou()));
                     }
                     handleData(list);
                     FileUtils.write(getContext(),"BuShou",new Gson().toJson(list));
@@ -111,9 +118,8 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                 }
             });
         }else{
-            Log.d("WMA-WMA", "getBuShou: from local");
             String buShou = FileUtils.read(getContext(), "BuShou");
-            List<DataModel> list  =  new Gson().fromJson(buShou, new TypeToken<List<DataModel>>() {
+            list  =  new Gson().fromJson(buShou, new TypeToken<List<DataModel>>() {
             }.getType());
             handleData(list);
         }
@@ -135,7 +141,7 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                 @Override
                 public void onSuccess(PinYinModel pinYinModel) {
                     List<PinYinModel.ResultBean> result = pinYinModel.getResult();
-                    List<DataModel> list = new ArrayList<>();
+                     list = new ArrayList<>();
                     for (int i = 0; i < result.size(); i++) {
                         PinYinBaseModel.ResultBean resultBean = result.get(i);
                         list.add(new DataModel(resultBean.getId(),resultBean.getPinyin_key(),resultBean.getPinyin()));
@@ -159,7 +165,7 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             });
         }else{
             String pinYin = FileUtils.read(getContext(), "PinYin");
-            List<DataModel> list  =  new Gson().fromJson(pinYin, new TypeToken<List<DataModel>>() {
+            list  =  new Gson().fromJson(pinYin, new TypeToken<List<DataModel>>() {
             }.getType());
             handleData(list);
         }

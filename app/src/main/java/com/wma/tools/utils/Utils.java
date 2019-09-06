@@ -62,6 +62,9 @@ public class Utils {
         }
         String read = FileUtils.read(mContext, "P_"+SPUtils.getCurProvince());
         Model model = new Gson().fromJson(read, Model.class);
+        if(model==null){
+            return "";
+        }
         List<Model.ResultBean> result = model.getResult();
         List<String> list = new ArrayList<>();
         for (int i = 0; i < result.size(); i++) {

@@ -173,7 +173,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
         if (mRecyclerView != null) {
             if (style() == WCommon.LINEAR) {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+//                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 //                mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
             } else {
                 mRecyclerView.addItemDecoration(new GridSpaceItemDecoration(span(), spacingInPixels(), false));
