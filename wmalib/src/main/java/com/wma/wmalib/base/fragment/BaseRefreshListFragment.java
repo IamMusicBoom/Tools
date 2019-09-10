@@ -151,7 +151,7 @@ public abstract class BaseRefreshListFragment<T,E extends ViewDataBinding,H exte
     }
 
     @Override
-    public void initRecyclerView() {
+    public void initRecyclerView(boolean isRevert) {
         mEmptyView = getEmptyView();
         if (mEmptyView != null) {
             mEmptyView.setOnClickListener(new View.OnClickListener() {
@@ -167,11 +167,11 @@ public abstract class BaseRefreshListFragment<T,E extends ViewDataBinding,H exte
 
         if (mRecyclerView != null) {
             if (style() == WCommon.LINEAR) {
-                mRecyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
+                mRecyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), isRevert));
                 mRecyclerView.getRefreshableView().addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
             } else {
                 mRecyclerView.getRefreshableView().addItemDecoration(new GridSpaceItemDecoration(span(), spacingInPixels(), false));
-                mRecyclerView.getRefreshableView().setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), false));
+                mRecyclerView.getRefreshableView().setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), isRevert));
             }
         }
     }

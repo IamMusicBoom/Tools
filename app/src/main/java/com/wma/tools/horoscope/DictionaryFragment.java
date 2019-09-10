@@ -26,42 +26,33 @@ public class DictionaryFragment extends BaseFragment<FragmentDictionaryBinding> 
         binding.tv0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),DictionaryKindActivity.class);
-                intent.putExtra("position", 0);
-                intent.putExtra("title", ((TextView) v).getText().toString());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"title").toBundle());
-                }else{
-                    startActivity(intent);
-                }
+                goDictionaryActivity(DictionaryKindActivity.WORD,((TextView) v).getText().toString());
             }
         });
         binding.tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),DictionaryKindActivity.class);
-                intent.putExtra("position", 1);
-                intent.putExtra("title", ((TextView) v).getText().toString());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"title").toBundle());
-                }else{
-                    startActivity(intent);
-                }
+                goDictionaryActivity(DictionaryKindActivity.BU_SHOU,((TextView) v).getText().toString());
             }
         });
         binding.tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),DictionaryKindActivity.class);
-                intent.putExtra("position", 2);
-                intent.putExtra("title", ((TextView) v).getText().toString());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"title").toBundle());
-                }else{
-                    startActivity(intent);
-                }
+                goDictionaryActivity(DictionaryKindActivity.PIN_YIN,((TextView) v).getText().toString());
             }
         });
+    }
+
+    private void goDictionaryActivity(int pos, String tiitle) {
+        Intent intent = new Intent(getActivity(),DictionaryKindActivity.class);
+        intent.putExtra("position", pos);
+        intent.putExtra("title", tiitle);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"title").toBundle());
+//                }else{
+//                    startActivity(intent);
+//                }
+        startActivity(intent);
     }
 
     @Override

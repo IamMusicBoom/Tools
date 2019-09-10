@@ -38,9 +38,6 @@ public class NewsFragment extends BaseTabFragment<FragmentNewsBinding> {
     @Override
     public void create(Bundle savedInstanceState) {
         HttpUtils.httpUtils.init(IAllApi.NEWS_HOST);
-
-
-
     }
 
     @Override

@@ -32,7 +32,6 @@ import java.util.List;
  * Created by 王明骜 on 19-8-7 上午11:02.
  */
 public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
-    private final String TAG = this.getClass().getSimpleName();
     List<String> mDetailList = new ArrayList<>();
     List<WeatherModel.ResultBean.FutureBean> mFeatures = new ArrayList<>();
     WeakReference<FragmentWeatherBinding> mWeakBinding;
@@ -209,11 +208,15 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
     }
 
 
+
     class MyLocateReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            if(!getUserVisibleHint()){
+                return;
+            }
             if(action.equals("com.wma.tools.locateSuccess")){
                 getData(SPUtils.getCurDist());
             }else if (action.equals("com.wma.tools.locateFail")){

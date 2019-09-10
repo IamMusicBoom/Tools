@@ -33,7 +33,6 @@ public class NewsListFragment extends BaseRefreshListFragment<NewsModel.ResultBe
     WeakReference<FragmentNewsListBinding> mWeakBinding;
     String key = "";
 
-    String TAG = this.getClass().getSimpleName();
 
     public static NewsListFragment newInstance(String title) {
         NewsListFragment fragment = new NewsListFragment();

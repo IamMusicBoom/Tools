@@ -14,12 +14,13 @@ import com.wma.tools.news.NewsFragment;
 import com.wma.tools.weather.WeatherFragment;
 import com.wma.wmalib.base.activity.BaseTabActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
-    ActivityMainBinding mBinding;
+    WeakReference<ActivityMainBinding> mWeakBinding;
     @Override
     public List<Fragment> getFragments() {
         List<Fragment> list = new ArrayList<>();
@@ -31,12 +32,12 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
     }
     @Override
     public ViewPager getViewPager() {
-        return mBinding.viewpager;
+        return mWeakBinding.get().viewpager;
     }
 
     @Override
     public TabLayout getTabLayout() {
-        return mBinding.tabLayout;
+        return mWeakBinding.get().tabLayout;
     }
 
     @Override
@@ -62,8 +63,9 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
 
     @Override
     public void onCreate(Bundle savedInstanceState, ActivityMainBinding binding) {
-        mBinding = binding;
+        mWeakBinding = new WeakReference<>(binding);
         initViews();
+        mWeakBinding.get().viewpager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -74,6 +76,5 @@ public class MainActivity extends BaseTabActivity<ActivityMainBinding> {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBinding = null;
     }
 }

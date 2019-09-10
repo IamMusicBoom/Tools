@@ -260,4 +260,10 @@ public class LocatingView extends View {
         mAnim.start();
     }
 
+    private void stopAnim(){
+        if(mAnim != null && mAnim.isRunning()){
+            mAnim.cancel();
+        }
+    }
+
 }

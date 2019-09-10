@@ -59,8 +59,6 @@ public class CeilingItemDecoration extends RecyclerView.ItemDecoration {
             mDividerHeight = mItemDiverHeight;
         }
         outRect.top = mDividerHeight;
-        Log.d("WMA-WMA", "onDraw: pos = " + position + " outRect.top = " + outRect.top);
-
     }
 
     @Override

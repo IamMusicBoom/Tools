@@ -22,7 +22,7 @@ import app.BaseAppContext;
  * Created by 王明骜 on 19-8-6 下午3:31.
  */
 public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
-
+    public final String TAG = this.getClass().getSimpleName();
 
     /**
      * 是否初始化过布局
@@ -97,14 +97,14 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
         super.onActivityCreated(savedInstanceState);
         isViewInitiated = true;
         create(savedInstanceState);
-        initRecyclerView();
+        initRecyclerView(false);
         if (isFirstLoad && isViewInitiated && isVisibleToUser) {
             lazyLoad();
             isFirstLoad = false;
         }
     }
 
-    public void initRecyclerView() {
+    public void initRecyclerView(boolean isRevert) {
 
     }
 

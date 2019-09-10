@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.wma.wmalib.base.GridSpaceItemDecoration;
@@ -65,6 +66,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
             showEmptyView(false);
             mAdapter.addItems(_data);
         }
+
 //        mRecyclerView.onRefreshComplete();
 //        if (!only_from_start) {
 //            if (mTotal <= mAdapter.getData().size())
@@ -159,7 +161,7 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
     }
 
     @Override
-    public void initRecyclerView() {
+    public void initRecyclerView(boolean isRevert) {
         mEmptyView = getEmptyView();
         if (mEmptyView != null) {
             mEmptyView.setOnClickListener(new View.OnClickListener() {
@@ -172,15 +174,16 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
 
         if (mRecyclerView != null) {
             if (style() == WCommon.LINEAR) {
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), false));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), orientation(), isRevert));
 //                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 //                mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels()));
             } else {
                 mRecyclerView.addItemDecoration(new GridSpaceItemDecoration(span(), spacingInPixels(), false));
-                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), false));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), span(), orientation(), isRevert));
             }
         }
     }
+
 
 
     public abstract void getListData();

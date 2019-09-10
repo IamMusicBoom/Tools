@@ -192,6 +192,7 @@ public class NewsModel extends BaseModel<IAllApi> {
     }
 
     public void getDatas(String type, final HttpCallBack<ResultBean> callBack) {
+        HttpUtils.httpUtils.init(IAllApi.NEWS_HOST);
         Map<String, String> map = new HashMap<>();
         map.put("key", "ddf058f205abc13f4a0bd68661b41f55");
         Observable<NewsModel> news = iAllApi.getNews(type, map);

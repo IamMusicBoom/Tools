@@ -1,6 +1,8 @@
 package com.wma.tools.model;
 
 import com.wma.tools.model.horoscope.BuShouModel;
+import com.wma.tools.model.horoscope.DetailListModel;
+import com.wma.tools.model.horoscope.DetailModel;
 import com.wma.tools.model.horoscope.PinYinModel;
 import com.wma.tools.model.news.NewsModel;
 import com.wma.tools.model.weather.CityModel;
@@ -64,4 +66,21 @@ public interface IAllApi {
 
     @GET("xhzd/bushou")
     Observable<BuShouModel> getBuShou(@Query("key") String key);
+
+
+    @GET("xhzd/querypy")
+    Observable<DetailListModel> getPinYinDetailList(@Query("key") String key, @QueryMap Map<String,String> map);
+
+    @GET("xhzd/querybs")
+    Observable<DetailListModel> getBuShouDetailList(@Query("key") String key, @QueryMap Map<String,String> map);
+
+
+    @GET("xhzd/queryid")
+    Observable<DetailModel> getDataById(@Query("key") String key, @QueryMap Map<String,String> map);
+
+    @GET("xhzd/query")
+    Observable<DetailModel> getDataByWord(@Query("key") String key, @QueryMap Map<String,String> map);
+
+
+
 }

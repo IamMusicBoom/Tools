@@ -1,9 +1,7 @@
 package com.wma.tools.horoscope;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +16,7 @@ import com.wma.tools.model.horoscope.DataModel;
 import com.wma.tools.model.horoscope.PinYinBaseModel;
 import com.wma.tools.model.horoscope.PinYinModel;
 import com.wma.tools.utils.SPUtils;
+import com.wma.wmalib.base.adapter.BaseRecyclerViewAdapter;
 import com.wma.wmalib.base.fragment.BaseListFragment;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.common.LogUtils;
@@ -31,10 +30,11 @@ import java.util.List;
  * Created by 王明骜 on 19-8-7 上午10:59.
  */
 public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding, FragmentPinYinBinding> {
-    private final String TAG = this.getClass().getSimpleName();
     WeakReference<FragmentPinYinBinding> mWeakBinding;
     DictionaryFragment mParent;
-    List<DataModel> list;
+    List<DataModel> mList;
+
+//    int mCurPos;
     @Override
     protected void createContentView(ViewGroup container, FragmentPinYinBinding binding) {
         mWeakBinding = new WeakReference<>(binding);
@@ -49,17 +49,17 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
     @Override
     public void create(Bundle savedInstanceState) {
         Bundle arguments = getArguments();
-        int position = arguments.getInt("position");
+
+        int mCurPos = arguments.getInt("position");
         mParent = (DictionaryFragment) getParentFragment();
         mRecyclerView = (RecyclerView) ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(0);
         mRecyclerView.addItemDecoration(new CeilingItemDecoration(getActivity(), new CeilingItemDecoration.GroupController() {
             @Override
             public String getGroupName(int pos) {
-                return list.get(pos).getKey();
+                return mList.get(pos).getKey();
             }
         }));
-        getData(position);
-
+        getData(mCurPos);
     }
 
     @Override
@@ -70,10 +70,10 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
 
     private void getData(int position) {
         switch (position){
-            case 1:
+            case DictionaryKindActivity.BU_SHOU:
                 getBuShou();
                 break;
-            case 2:
+            case DictionaryKindActivity.PIN_YIN:
                 getPinYin();
                 break;
         }
@@ -95,14 +95,20 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                 @Override
                 public void onSuccess(BuShouModel pinYinModel) {
                     List<BuShouModel.ResultBean> result = pinYinModel.getResult();
-                    list = new ArrayList<>();
+                    mList = new ArrayList<>();
                     for (int i = 0; i < result.size(); i++) {
                         BuShouBaseModel.ResultBean resultBean = result.get(i);
-                        list.add(new DataModel(resultBean.getId(),resultBean.getBihua()+" 画",resultBean.getBushou()));
+                        mList.add(new DataModel(resultBean.getId(),resultBean.getBihua()+" 画",resultBean.getBushou()));
                     }
-                    handleData(list);
-                    FileUtils.write(getContext(),"BuShou",new Gson().toJson(list));
+                    handleData(mList);
+                    FileUtils.write(getContext(),"BuShou",new Gson().toJson(mList));
                     SPUtils.setIsLoadBuShou(true);
+                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+                        @Override
+                        public void onItemClick(View covertView, int position, DataModel data) {
+                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+                        }
+                    });
                 }
 
                 @Override
@@ -119,9 +125,15 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             });
         }else{
             String buShou = FileUtils.read(getContext(), "BuShou");
-            list  =  new Gson().fromJson(buShou, new TypeToken<List<DataModel>>() {
+            mList =  new Gson().fromJson(buShou, new TypeToken<List<DataModel>>() {
             }.getType());
-            handleData(list);
+            handleData(mList);
+            getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+                @Override
+                public void onItemClick(View covertView, int position, DataModel data) {
+                    ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+                }
+            });
         }
     }
 
@@ -141,14 +153,20 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                 @Override
                 public void onSuccess(PinYinModel pinYinModel) {
                     List<PinYinModel.ResultBean> result = pinYinModel.getResult();
-                     list = new ArrayList<>();
+                     mList = new ArrayList<>();
                     for (int i = 0; i < result.size(); i++) {
                         PinYinBaseModel.ResultBean resultBean = result.get(i);
-                        list.add(new DataModel(resultBean.getId(),resultBean.getPinyin_key(),resultBean.getPinyin()));
+                        mList.add(new DataModel(resultBean.getId(),resultBean.getPinyin_key(),resultBean.getPinyin()));
                     }
-                    handleData(list);
-                    FileUtils.write(getContext(),"PinYin",new Gson().toJson(list));
+                    handleData(mList);
+                    FileUtils.write(getContext(),"PinYin",new Gson().toJson(mList));
                     SPUtils.setIsLoadPinYin(true);
+                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+                        @Override
+                        public void onItemClick(View covertView, int position, DataModel data) {
+                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+                        }
+                    });
                 }
 
                 @Override
@@ -165,9 +183,15 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             });
         }else{
             String pinYin = FileUtils.read(getContext(), "PinYin");
-            list  =  new Gson().fromJson(pinYin, new TypeToken<List<DataModel>>() {
+            mList =  new Gson().fromJson(pinYin, new TypeToken<List<DataModel>>() {
             }.getType());
-            handleData(list);
+            handleData(mList);
+            getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+                @Override
+                public void onItemClick(View covertView, int position, DataModel data) {
+                    ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+                }
+            });
         }
     }
 
@@ -189,12 +213,6 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
     @Override
     public void bindItemData(ItemPinYinBinding itemPinYinBinding, DataModel info, int position) {
         itemPinYinBinding.tvItem.setText(info.getValue());
-        itemPinYinBinding.tvItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
 
@@ -204,5 +222,17 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
         bundle.putInt("position",position);
         listFragment.setArguments(bundle);
         return listFragment;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter = null;
+        mParent = null;
+        mRecyclerView = null;
+        if(mList != null){
+            mList.clear();
+            mList = null;
+        }
     }
 }
