@@ -96,7 +96,21 @@ public class SearchFragment extends BaseListFragment<String, ItemHistoryBinding,
     }
 
     @Override
-    public void bindItemData(ItemHistoryBinding itemHistoryBinding, final String info, int position) {
+    public void bindItemData(final ItemHistoryBinding itemHistoryBinding, final String info, final int position) {
         itemHistoryBinding.tvHistory.setText(info);
+        itemHistoryBinding.tvHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((DictionaryKindActivity) getActivity()).goNext(info,info);
+            }
+        });
+        itemHistoryBinding.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mList.remove(position);
+                FileUtils.write(getContext(),"history",new Gson().toJson(mList));
+                mAdapter.removeItem(position);
+            }
+        });
     }
 }

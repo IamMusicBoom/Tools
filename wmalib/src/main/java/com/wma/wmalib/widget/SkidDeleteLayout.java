@@ -1,6 +1,7 @@
 package com.wma.wmalib.widget;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,13 +33,18 @@ public class SkidDeleteLayout extends LinearLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                firstX = ev.getX();
+                firstY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                if ((firstY = ev.getY()) != 0 && Math.abs((firstX - ev.getX())) > 10) {
+                   return true;
+                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
         }
-        return true;
+        return super.onInterceptTouchEvent(ev);
     }
 
     float firstX = 0, firstY = 0;
@@ -48,34 +54,33 @@ public class SkidDeleteLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.d("WMA-WMA", "onTouchEvent: " + event.getAction());
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                firstX = event.getX();
-                firstY = event.getY();
-                break;
             case MotionEvent.ACTION_MOVE:
                 if ((firstY = event.getY()) != 0 && Math.abs((firstX - event.getX())) > 10) {
                     getParent().requestDisallowInterceptTouchEvent(true);
+                    if (!isShow) {
+                        distance = (int) (firstX - event.getX());
+                        if (distance > hideChildWidth) {
+                            distance = hideChildWidth;
+                        }
+                        if (distance < 0) {
+                            distance = 0;
+                        }
+                    } else {
+                        distance = hideChildWidth + (int) (firstX - event.getX());
+                        if (distance < 0) {
+                            distance = 0;
+                        }
+                        if (distance > hideChildWidth) {
+                            distance = hideChildWidth;
+                        }
+                    }
+                    scrollTo(distance, 0);
+                    return true;
+                }else{
+                    return super.onTouchEvent(event);
                 }
-                if (!isShow) {
-                    distance = (int) (firstX - event.getX());
-                    if (distance > hideChildWidth) {
-                        distance = hideChildWidth;
-                    }
-                    if (distance < 0) {
-                        distance = 0;
-                    }
-                } else {
-                    distance = hideChildWidth + (int) (firstX - event.getX());
-                    if (distance < 0) {
-                        distance = 0;
-                    }
-                    if (distance > hideChildWidth) {
-                        distance = hideChildWidth;
-                    }
-                }
-                scrollTo(distance, 0);
-                break;
             case MotionEvent.ACTION_UP:
                 if (distance == hideChildWidth) { //展示
                     isShow = true;
@@ -108,7 +113,7 @@ public class SkidDeleteLayout extends LinearLayout {
                 }
                 break;
         }
-        return true;
+        return super.onTouchEvent(event);
     }
 
     private int hideChildWidth = 0;
