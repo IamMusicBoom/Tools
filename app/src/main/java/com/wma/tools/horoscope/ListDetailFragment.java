@@ -31,7 +31,7 @@ public class ListDetailFragment extends BaseListFragment<DetailListBaseModel.Res
     private final String TAG = ListDetailFragment.this.getClass().getSimpleName();
     @Override
     protected View getEmptyView() {
-        return null;
+        return ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(1);
     }
 
     @Override
@@ -79,8 +79,6 @@ public class ListDetailFragment extends BaseListFragment<DetailListBaseModel.Res
         String key = arguments.getString("key");
         final int position = arguments.getInt("position");
         mRecyclerView = mWeakBinding.get().recyclerView.getRecyclerView();
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        mEmptyView =  ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(1);
         getData(position, key);
     }
 
@@ -117,12 +115,14 @@ public class ListDetailFragment extends BaseListFragment<DetailListBaseModel.Res
             public void onFail(String e) {
                 hideLoading();
                 LogUtils.d(TAG,e);
+                showEmptyView(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 hideLoading();
                 LogUtils.d(TAG,e.toString());
+                showEmptyView(true);
             }
         });
     }

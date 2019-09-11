@@ -3,7 +3,9 @@ package com.wma.wmalib.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -65,16 +67,13 @@ public class IndicatorRecyclerView extends RelativeLayout {
         if (mIndicatorBg != Color.TRANSPARENT) {
             mIndicatorLl.setBackgroundColor(mIndicatorBg);
         } else {
-            mIndicatorLl.setBackgroundColor(Color.CYAN);
+//            mIndicatorLl.setBackgroundColor(Color.CYAN);
         }
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        lp.topMargin = DpUtils.dp2px(mContext, 50);
-        lp.bottomMargin = DpUtils.dp2px(mContext, 50);
-        lp.rightMargin = DpUtils.dp2px(mContext, 10);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mIndicatorLl.setLayoutParams(lp);
         mIndicatorLl.setOrientation(LinearLayout.VERTICAL);
         mIndicatorLl.setGravity(Gravity.CENTER);
+        mIndicatorLl.setPadding(20,20,20,20);
         mIndicatorLl.addShowTabListener(new IndicatorListLayout.ShowTabListener() {
             @Override
             public void show(boolean isShow, int pos) {
@@ -124,7 +123,19 @@ public class IndicatorRecyclerView extends RelativeLayout {
             });
             mIndicatorLl.addView(tv);
         }
-        addView(mIndicatorLl);
+        CardView cardView = new CardView(mContext);
+        cardView.setRadius(DpUtils.dp2px(mContext,5));
+        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        lp.topMargin = DpUtils.dp2px(mContext, 50);
+        lp.bottomMargin = DpUtils.dp2px(mContext, 50);
+        lp.rightMargin = DpUtils.dp2px(mContext, 10);
+        cardView.setLayoutParams(lp);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cardView.setElevation(DpUtils.dp2px(mContext,10));
+        }
+        cardView.addView(mIndicatorLl);
+        addView(cardView);
     }
 
 

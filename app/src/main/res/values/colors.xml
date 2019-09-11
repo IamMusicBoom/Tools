@@ -24,5 +24,8 @@
     <color name="fail_red">#FD4046</color>
     <color name="success_green">#92C63D</color>
 
+    <color name="level_color">#00EAFF</color>
+
+
 </resources>
 

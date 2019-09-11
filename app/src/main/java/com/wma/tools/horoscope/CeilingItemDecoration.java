@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.wma.tools.R;
 import com.wma.wmalib.utils.DpUtils;
@@ -43,7 +44,7 @@ public class CeilingItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void initData() {
-        mItemDiverHeight = 1;
+        mItemDiverHeight = 0;
         mGroupDividerHeight = 150;
         mGroupColor = ContextCompat.getColor(mContext, R.color.colorPrimaryDark);
         mCellingColor = Color.BLACK;
@@ -98,7 +99,6 @@ public class CeilingItemDecoration extends RecyclerView.ItemDecoration {
         }
         int position = parent.getChildAdapterPosition(childAt);
         int left = parent.getPaddingLeft();
-
         int right = childAt.getWidth() - parent.getPaddingRight();
         if (childAt.getBottom() <= mGroupDividerHeight && isGroupFirst(position + 1)) {
             mPaint.setColor(mGroupColor);

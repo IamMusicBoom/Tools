@@ -4,11 +4,12 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:background="@color/ban_tou"
+            android:background="@android:color/white"
             android:orientation="vertical">
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -17,6 +18,13 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/ban_tou"
+                    app:cardCornerRadius="8dp">
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -60,14 +68,22 @@
                         android:textColor="@android:color/white"
                         android:layout_marginLeft="10dp"/>
                 </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
             </android.support.design.widget.CollapsingToolbarLayout>
+
         </android.support.design.widget.AppBarLayout>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="8dp">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.CardView>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -121,12 +121,12 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                     handleData(mList);
                     FileUtils.write(getContext(),"BuShou",new Gson().toJson(mList));
                     SPUtils.setIsLoadBuShou(true);
-                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
-                        @Override
-                        public void onItemClick(View covertView, int position, DataModel data) {
-                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
-                        }
-                    });
+//                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+//                        @Override
+//                        public void onItemClick(View covertView, int position, DataModel data) {
+//                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+//                        }
+//                    });
                 }
 
                 @Override
@@ -146,12 +146,12 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             mList =  new Gson().fromJson(buShou, new TypeToken<List<DataModel>>() {
             }.getType());
             handleData(mList);
-            getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
-                @Override
-                public void onItemClick(View covertView, int position, DataModel data) {
-                    ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
-                }
-            });
+//            getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+//                @Override
+//                public void onItemClick(View covertView, int position, DataModel data) {
+//                    ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+//                }
+//            });
         }
     }
 
@@ -179,12 +179,12 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
                     handleData(mList);
                     FileUtils.write(getContext(),"PinYin",new Gson().toJson(mList));
                     SPUtils.setIsLoadPinYin(true);
-                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
-                        @Override
-                        public void onItemClick(View covertView, int position, DataModel data) {
-                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
-                        }
-                    });
+//                    getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
+//                        @Override
+//                        public void onItemClick(View covertView, int position, DataModel data) {
+//                            ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
+//                        }
+//                    });
                 }
 
                 @Override
@@ -204,12 +204,6 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             mList =  new Gson().fromJson(pinYin, new TypeToken<List<DataModel>>() {
             }.getType());
             handleData(mList);
-            getAdapter().setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<DataModel>() {
-                @Override
-                public void onItemClick(View covertView, int position, DataModel data) {
-                    ((DictionaryKindActivity) getActivity()).goNext(data.getValue(),data.getValue());
-                }
-            });
         }
     }
 
@@ -229,8 +223,14 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
     }
 
     @Override
-    public void bindItemData(ItemPinYinBinding itemPinYinBinding, DataModel info, int position) {
+    public void bindItemData(ItemPinYinBinding itemPinYinBinding, final DataModel info, int position) {
         itemPinYinBinding.tvItem.setText(info.getValue());
+        itemPinYinBinding.tvItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((DictionaryKindActivity) getActivity()).goNext(info.getValue(),info.getValue());
+            }
+        });
     }
 
 
