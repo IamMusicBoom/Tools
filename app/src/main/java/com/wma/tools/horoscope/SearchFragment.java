@@ -49,7 +49,7 @@ public class SearchFragment extends BaseListFragment<String, ItemHistoryBinding,
                 if(TextUtils.isEmpty(word)){
                     return;
                 }
-                if(mList.size()==50){
+                if(mList.size()==10){
                     mList.remove(mList.size()-1);
                 }else if(mList.size()<10){
                     mList.contains(word);

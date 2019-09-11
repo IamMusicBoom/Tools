@@ -77,7 +77,7 @@ public class ListDetailFragment extends BaseListFragment<DetailListBaseModel.Res
         Bundle arguments = getArguments();
         String key = arguments.getString("key");
         final int position = arguments.getInt("position");
-        mRecyclerView = (RecyclerView) ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(0);
+        mRecyclerView = mWeakBinding.get().recyclerView.getRecyclerView();
         mEmptyView =  ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(1);
         getData(position, key);
     }

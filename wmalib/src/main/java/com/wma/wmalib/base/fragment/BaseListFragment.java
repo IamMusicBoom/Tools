@@ -54,6 +54,9 @@ public abstract class BaseListFragment<T,E extends ViewDataBinding,H extends Vie
         if (mAdapter == null) {
             mAdapter = new BaseIViewDataRecyclerAdapter();
 //            setLinearLayout();
+            if(mRecyclerView == null){
+                return;
+            }
             mRecyclerView.setAdapter(mAdapter);
         }
         if (mPage == 1) {

@@ -2,9 +2,11 @@ package com.wma.tools.horoscope;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.load.data.ExifOrientationStream;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wma.tools.R;
@@ -21,10 +23,14 @@ import com.wma.wmalib.base.fragment.BaseListFragment;
 import com.wma.wmalib.callback.HttpCallBack;
 import com.wma.wmalib.common.LogUtils;
 import com.wma.wmalib.utils.FileUtils;
+import com.wma.wmalib.widget.IndicatorRecyclerView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 王明骜 on 19-8-7 上午10:59.
@@ -52,7 +58,7 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
 
         int mCurPos = arguments.getInt("position");
         mParent = (DictionaryFragment) getParentFragment();
-        mRecyclerView = (RecyclerView) ((ViewGroup) mWeakBinding.get().getRoot()).getChildAt(0);
+        mRecyclerView =mWeakBinding.get().recyclerView.getRecyclerView();
         mRecyclerView.addItemDecoration(new CeilingItemDecoration(getActivity(), new CeilingItemDecoration.GroupController() {
             @Override
             public String getGroupName(int pos) {
@@ -60,6 +66,15 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             }
         }));
         getData(mCurPos);
+        Map<String,Integer> map = new LinkedHashMap<>();
+        for (int i = 0; i < mList.size(); i++) {
+            DataModel dataModel = mList.get(i);
+            if(map.containsKey(dataModel.getKey())){
+                continue;
+            }
+            map.put(dataModel.getKey(),i);
+        }
+        mWeakBinding.get().recyclerView.setIndicators(map);
     }
 
     @Override

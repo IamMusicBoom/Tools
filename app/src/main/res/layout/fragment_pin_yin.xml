@@ -5,10 +5,11 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<android.support.v7.widget.RecyclerView
+<com.wma.wmalib.widget.IndicatorRecyclerView
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-</android.support.v7.widget.RecyclerView>
+</com.wma.wmalib.widget.IndicatorRecyclerView>
     <include layout="@layout/view_empty" />
 </android.support.constraint.ConstraintLayout>
 </layout>
