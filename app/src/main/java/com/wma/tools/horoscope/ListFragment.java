@@ -67,6 +67,9 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
         }));
         getData(mCurPos);
         Map<String,Integer> map = new LinkedHashMap<>();
+        if(mList == null){
+            return;
+        }
         for (int i = 0; i < mList.size(); i++) {
             DataModel dataModel = mList.get(i);
             if(map.containsKey(dataModel.getKey())){

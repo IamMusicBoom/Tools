@@ -18,4 +18,6 @@
     <color name="app_style_color">#4c637b</color>
 
     <color name="order_normal_color">#e6e9ef</color>
+
+    <color name="half_trans">#99000000</color>
 </resources>

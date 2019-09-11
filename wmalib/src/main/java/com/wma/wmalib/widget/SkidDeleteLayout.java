@@ -54,7 +54,6 @@ public class SkidDeleteLayout extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d("WMA-WMA", "onTouchEvent: " + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 if ((firstY = event.getY()) != 0 && Math.abs((firstX - event.getX())) > 10) {
