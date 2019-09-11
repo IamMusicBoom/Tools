@@ -214,6 +214,7 @@ public class WeatherFragment extends BaseFragment<FragmentWeatherBinding> {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.d("WMA-WMA", "onReceive:  " + action);
             if(!getUserVisibleHint()){
                 return;
             }

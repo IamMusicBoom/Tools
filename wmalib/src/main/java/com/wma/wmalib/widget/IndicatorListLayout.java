@@ -55,13 +55,6 @@ public class IndicatorListLayout extends LinearLayout {
 
                 break;
             case MotionEvent.ACTION_UP:
-                if (Math.abs(firstY - ev.getY()) > 10) {
-                    if (showTabListener != null) {
-                        Log.d("WMA-WMA", "onInterceptTouchEvent: Up");
-                        showTabListener.show(false, getPos(ev.getY()));
-                    }
-                    return true;
-                }
                 break;
         }
         return super.onInterceptTouchEvent(ev);
