@@ -101,18 +101,15 @@ public class SearchFragment extends BaseListFragment<String, ItemHistoryBinding,
         itemHistoryBinding.tvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("WMA-WMA", "onClick: position = " + position);
-//                ((DictionaryKindActivity) getActivity()).goNext(info,info);
+                ((DictionaryKindActivity) getActivity()).goNext(info,info);
             }
         });
         itemHistoryBinding.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("WMA-WMA", "onClick: " + position + "  mList.Size = " + mList.size());
                 mList.remove(info);
                 mAdapter.removeItem(info);
                 FileUtils.write(getContext(),"history",new Gson().toJson(mList));
-                Log.d("WMA-WMA", "onClick: " + position + "  mList.Size = " + mList.size());
             }
         });
     }

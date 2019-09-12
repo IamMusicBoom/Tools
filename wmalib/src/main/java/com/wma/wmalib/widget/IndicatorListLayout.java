@@ -66,7 +66,7 @@ public class IndicatorListLayout extends LinearLayout {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (Math.abs(firstY - event.getY()) > 10) {
+                if (Math.abs(firstY - event.getY()) > 20) {
                     if (showTabListener != null) {
                         showTabListener.show(true, getPos(event.getY()));
                     }

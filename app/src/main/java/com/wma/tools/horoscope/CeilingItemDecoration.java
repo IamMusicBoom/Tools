@@ -112,7 +112,6 @@ public class CeilingItemDecoration extends RecyclerView.ItemDecoration {
             float baseLine = mGroupDividerHeight / 2f - (mPaint.descent() + mPaint.ascent()) / 2f;
             mPaint.setColor(mCellingColor);
             mPaint.setTextSize(DpUtils.sp2px(mContext, 20));
-//            c.drawText(getGroupName(position), left + DpUtils.dp2px(mContext, 10), baseLine, mPaint);
             c.drawText(getGroupName(position), left + DpUtils.dp2px(mContext, 10), baseLine, mPaint);
         }
 

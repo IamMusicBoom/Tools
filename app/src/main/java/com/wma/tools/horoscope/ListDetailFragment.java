@@ -149,12 +149,14 @@ public class ListDetailFragment extends BaseListFragment<DetailListBaseModel.Res
             public void onFail(String e) {
                 hideLoading();
                 LogUtils.d(TAG,e);
+                showEmptyView(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 hideLoading();
                 LogUtils.d(TAG,e.toString());
+                showEmptyView(true);
             }
         });
 

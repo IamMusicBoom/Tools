@@ -58,7 +58,7 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
 
         int mCurPos = arguments.getInt("position");
         mParent = (DictionaryFragment) getParentFragment();
-        mRecyclerView =mWeakBinding.get().recyclerView.getRecyclerView();
+        mRecyclerView = mWeakBinding.get().recyclerView.getRecyclerView();
         mRecyclerView.addItemDecoration(new CeilingItemDecoration(getActivity(), new CeilingItemDecoration.GroupController() {
             @Override
             public String getGroupName(int pos) {
@@ -78,6 +78,12 @@ public class ListFragment extends BaseListFragment<DataModel, ItemPinYinBinding,
             map.put(dataModel.getKey(),i);
         }
         mWeakBinding.get().recyclerView.setIndicators(map);
+        mWeakBinding.get().recyclerView.setOnGroupController(new IndicatorRecyclerView.GroupController() {
+            @Override
+            public String getGroupName(int pos) {
+                return mList.get(pos).getKey();
+            }
+        });
     }
 
     @Override

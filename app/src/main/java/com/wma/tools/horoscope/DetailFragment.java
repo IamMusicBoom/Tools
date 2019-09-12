@@ -30,7 +30,6 @@ public class DetailFragment extends BaseListFragment<String, ItemDicationaryDeta
     public static final int WORD_TYPE = 1;
     WeakReference<FragmentWordDetailBinding> mWeakBinding;
     private List<String> mList = new ArrayList<>();
-
     @Override
     protected void createContentView(ViewGroup container, FragmentWordDetailBinding binding) {
         mWeakBinding = new WeakReference<>(binding);
@@ -80,12 +79,14 @@ public class DetailFragment extends BaseListFragment<String, ItemDicationaryDeta
             public void onFail(String e) {
                 hideLoading();
                 LogUtils.d(TAG,e);
+                showEmptyView(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 hideLoading();
                 LogUtils.d(TAG,e.toString());
+                showEmptyView(true);
             }
         });
     }
@@ -114,12 +115,14 @@ public class DetailFragment extends BaseListFragment<String, ItemDicationaryDeta
             public void onFail(String e) {
                 hideLoading();
                 LogUtils.d(TAG,e);
+                showEmptyView(true);
             }
 
             @Override
             public void onError(Throwable e) {
                 hideLoading();
                 LogUtils.d(TAG,e.toString());
+                showEmptyView(true);
             }
         });
     }
@@ -148,7 +151,7 @@ public class DetailFragment extends BaseListFragment<String, ItemDicationaryDeta
 
     @Override
     protected View getEmptyView() {
-        return null;
+        return mWeakBinding.get().emptyView;
     }
 
     @Override
