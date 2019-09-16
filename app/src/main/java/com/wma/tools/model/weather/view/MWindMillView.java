@@ -74,6 +74,10 @@ public class MWindMillView extends View {
      * 柱子颜色
      */
     private int mPillarColor;
+    /**
+     * 中间圆心半径
+     */
+    private int mRadius;
 
     public MWindMillView(Context context) {
         super(context);
@@ -107,7 +111,6 @@ public class MWindMillView extends View {
         mPaint.setColor(mFanColor);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(5);
-
     }
 
     private void initData() {
@@ -118,8 +121,9 @@ public class MWindMillView extends View {
         mFanCount = 3;
         mDegrees = 360 / mFanCount;
         setWindLevel(1);
-        mHeight = mFanLength + mPillarHeight;
-        mWidth = mFanLength * 2;
+        mRadius = 10;
+        mHeight = mFanLength + mPillarHeight + 2 * mRadius;
+        mWidth = mFanLength * 2 + 2 * mRadius;
 
     }
 
@@ -131,7 +135,7 @@ public class MWindMillView extends View {
         switch (widthMode) {
             case MeasureSpec.EXACTLY:
                 mWidth = widthSize;
-                mFanLength = mWidth / 2;
+                mFanLength = (mWidth - 2 * mRadius) / 2;
                 break;
         }
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
@@ -161,12 +165,13 @@ public class MWindMillView extends View {
         }
         mCurDegrees += 5;
         canvas.translate(mWidth / 2, mHeight / 2);
-        RectF pillarRectF = new RectF(0 - mPillarWidth / 2, 10, mPillarWidth / 2, mPillarHeight);
+        RectF pillarRectF = new RectF(0 - mPillarWidth / 2, 0 + mRadius, mPillarWidth / 2, mPillarHeight+ mRadius);
         mPaint.setColor(mPillarColor);
+        canvas.drawCircle(0, 0, mRadius, mPaint); //画扇叶中间的圆
         canvas.drawRoundRect(pillarRectF, 50, 50, mPaint);
         mPaint.setColor(mFanColor);
-        RectF fanRectF = new RectF(0 - mFanWidth / 2, 0, mFanWidth / 2, mFanLength);
-        for (int i = 0; i < mFanCount; i++) {
+        RectF fanRectF = new RectF(0 - mFanWidth / 2, 0 + mRadius, mFanWidth / 2, mFanLength + mRadius);
+        for (int i = 0; i < mFanCount; i++) {//画扇叶
             canvas.save();
             canvas.rotate(mDegrees * i + mCurDegrees);
             canvas.drawOval(fanRectF, mPaint);
